@@ -43,7 +43,7 @@ class EventController extends AbstractController{
 
         /******* Auto test ********/
 
-        $testE = Event:where("idEvent", "like", $_POST['name'])->first();
+        $testE = Event::where("idEvent", "like", $_POST['name'])->first();
 
         if($testE == NULL){
           echo "Marche pas";

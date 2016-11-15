@@ -1,4 +1,4 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
 
 {% block content %}
 
@@ -12,17 +12,16 @@
     </div>
     {% endif %}
 
-    <div class="aligncenter">
+    <div class="aligncentre">
       <form action="createEvent" method="post">
         Name : <input name="name" type="text" autocomplete="off" placeholder="Give a name to your event" autofocus required /> <br/>
         Location : <input name="location" type="text" placeholder="Location of your event" required /> <br/>
         Discipline : <input name="discipline" type="text" placeholder="Discipline of your event, examples : course, walk" required /> <br/>
         Date : <input name="date" type="text" required/> <br/>
-        State : <input name="state" type="text" required /> <br/>
-        Description : <br/><textarea name="description" placeholder="Describe your event"/> <br/>
+        State : <input name="state" type="text" required/> <br/>
+        Description : <br/> <textarea name="description" placeholder="Describe your event"/> </textarea> <br/>
         <button class="btn" type="submit">Create the event</button>
       </form>
-
     </div>
 
-{% blockend %}
+{% endblock %}
