@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}SportNet{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="/SportNet/public/assets/css/framework.css">
+        <link rel="icon" href="/SportNet/public/assets/logo.png">
+    {% endblock %}
+
+</head>
+
+<body>
+
+
+{# navigation bar #}
+{% block navbar %}
+    <header>
+        {# <div class="title"><img src="/SportNet/public/assets/logo.png"></div> #}
+        <div class="title">SportNet</div>
+        <div class="subtitle">
+            <div><a href="home">Home</a></div>
+            <div><a href="events">Events</a></div>
+            <div>
+                <form action="search" method="post">
+                    <input type="text" placeholder="Search an event" autocomplete="off">
+                    <button class="btn" type="submit">Search</button>
+                </form>
+            </div>
+
+
+            {% if user != false %}
+                <div><a href="profile">Profile</a></div>
+                <div><a href="logout">Log out</a></div>
+            {% else %}
+                <div><a href="login">Login</a></div>
+                <div><a href="signup">Sign up</a></div>
+            {% endif %}
+
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block content %}
+    {# content #}
+{% endblock %}
+
+</body>
+
+</html>
