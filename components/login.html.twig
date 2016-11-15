@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block activelogin %}class="activeheader"{% endblock %}
+
+{% block content %}
+
+  {# login #}
+
+  {% if error != false %}
+  <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{ error }}
+  </div>
+  {% endif %}
+
+<div class="aligncentre">
+    <form action="login" method="post">
+        <input name="username" type="text" autocomplete="off" placeholder="Username or email address" autofocus required/> <br/>
+        <input name="password" type="password" autocomplete="off" placeholder="Password" required/> <br/>
+        <button class="btn">Log In</button>
+    </form>
+</div>
+
+
+{% endblock %}

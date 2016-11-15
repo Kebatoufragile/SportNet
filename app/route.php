@@ -12,7 +12,7 @@ $app->get('/users', 'App\Controllers\UserController:dispatch')->setName('userpag
 
 $app->get('/login', 'App\Controllers\LoginController:form')->setName('login');
 
-$app->post('/login', 'App\Controllers\LoginController:logIn')->setName('login');
+$app->post('/login', 'App\Controllers\LoginController:authenticateUser')->setName('login');
 
 $app->get('/signup', 'App\Controllers\RegisterController:dispatch')->setName('signup');
 
