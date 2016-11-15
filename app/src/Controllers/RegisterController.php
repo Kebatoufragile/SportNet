@@ -16,7 +16,7 @@ define('MAX_SIZE', 2000000);
 define('WIDTH_MAX', 1500);
 define('HEIGHT_MAX', 1500);
 
-final class InscriptionController extends AbstractController
+final class RegisterController extends AbstractController
 {
 
     protected $view;
@@ -53,7 +53,7 @@ final class InscriptionController extends AbstractController
             if(is_null(User::where('email', 'like', $email)->first())){
 
                 if(is_null(User::where('username', 'like', $username)->first())){
-                  if(strcmp($mdp, $mdp_confirmation)){
+                  if(!strcmp($mdp, $mdp_confirmation)){
                     if($username && $mdp && $ln && $fn && $email){
                         $credentials = [
                             'password' => $mdp,
@@ -65,7 +65,7 @@ final class InscriptionController extends AbstractController
 
                         $this->sentinel->registerAndActivate($credentials);
 
-                        // profile pic
+                        /*// profile pic
                         if(!empty($_FILES['profilepic']['name']))
                             $profilepic = $this->upload($username);
                         else
@@ -77,7 +77,7 @@ final class InscriptionController extends AbstractController
                         if(strcmp($profilepic, "default") !== 0)
                             $u->profilePic = $profilepic;
                         $u->save();
-                        return 3;
+                        return 3;*/
 
                     } else {
                         return 1;
@@ -128,7 +128,8 @@ final class InscriptionController extends AbstractController
             case 6:
                 $this->view['view']->render($response, 'register.html.twig', array(
                     'error' => 'Passwords are different.'
-                ))
+                ));
+                break;
             default:
                 $this->view['view']->render($response, 'register.html.twig', array(
                     'error' => 'Unable to register you, informations are wrong, please try again.'

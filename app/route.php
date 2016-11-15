@@ -16,4 +16,4 @@ $app->post('/login', 'App\Controllers\LoginController:logIn')->setName('login');
 
 $app->get('/signup', 'App\Controllers\RegisterController:dispatch')->setName('signup');
 
-$app->post('/signup', 'App\Controllers\RegisterController:dispatchSubmit')->setName('signup');
+$app->post('/signup', 'App\Controllers\RegisterController:dispatchSubmit')->setName('submit');
