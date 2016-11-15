@@ -14,7 +14,7 @@ $container['view'] = function ($c) {
     $settings = $c->get('settings')['view'];
     $view = new \Slim\Views\Twig($settings['template_path'], [
         'debug' => $settings['debug'],
-        'cache' => $settings['cache_path']
+        'cache' => false
     ]);
 	// Add extensions
     $view->addExtension(new \Slim\Views\TwigExtension(
