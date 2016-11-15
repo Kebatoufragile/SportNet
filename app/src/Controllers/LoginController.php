@@ -25,7 +25,7 @@ class LoginController extends AbstractController{
 
     public function form(Request $request, Response $response, $args){
       if(isset($_SESSION['user'])){
-        $res = $this->authenticateUser();
+        $res = $this->authenticateUser($request, $response, $args);
 
         if($res == 1){
             $this->view['view']->render($response, 'homepage.html.twig', array(
@@ -42,7 +42,7 @@ class LoginController extends AbstractController{
             ));
       }
     }else{
-        $res = $this->authenticateUser();
+        $res = $this->authenticateUser($request, $response, $args);
 
         if($res == 1){
             $this->view['view']->render($response, 'login.html.twig', array(
