@@ -65,7 +65,7 @@ final class RegisterController extends AbstractController
 
                         $this->sentinel->registerAndActivate($credentials);
 
-                        /*// profile pic
+                        // profile pic
                         if(!empty($_FILES['profilepic']['name']))
                             $profilepic = $this->upload($username);
                         else
@@ -77,7 +77,7 @@ final class RegisterController extends AbstractController
                         if(strcmp($profilepic, "default") !== 0)
                             $u->profilePic = $profilepic;
                         $u->save();
-                        return 3;*/
+                        return 3;
 
                     } else {
                         return 1;
@@ -111,7 +111,7 @@ final class RegisterController extends AbstractController
                 ));
                 break;
             case 3:
-                $this->view['view']->render($response, 'homepage.html.twig', array(
+                $this->view['view']->render($response, 'register.html.twig', array(
                     'success' => "You have been successfully registered. You can now try log in."
                 ));
                 break;
