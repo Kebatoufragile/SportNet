@@ -6,7 +6,8 @@
 
     {% block stylesheets %}
         <link rel="stylesheet" href="/SportNet/public/assets/css/framework.css">
-        <link rel="icon" href="/SportNet/public/assets/logo.png">
+        <link rel="stylesheet" href="/SportNet/public/assets/css/style.css">
+        <link rel="icon" href="/SportNet/public/assets/res/logo.png">
     {% endblock %}
 
 </head>
@@ -17,11 +18,10 @@
 {# navigation bar #}
 {% block navbar %}
     <header>
-        {# <div class="title"><img src="/SportNet/public/assets/logo.png"></div> #}
-        <div class="title">SportNet</div>
+        <div class="title"><img src="/SportNet/public/assets/res/logo.png" width="40%"></div>
         <div class="subtitle">
-            <div><a href="home">Home</a></div>
-            <div><a href="events">Events</a></div>
+            <div><a {% block activehome %}{% endblock %} href="home">Home</a></div>
+            <div><a {% block activeevents %}{% endblock %} href="events">Events</a></div>
             <div>
                 <form action="search" method="post">
                     <input type="text" placeholder="Search an event" autocomplete="off">
@@ -31,11 +31,11 @@
 
 
             {% if user != false %}
-                <div><a href="profile">Profile</a></div>
+                <div><a {% block activeprofile %}{% endblock %}href="profile">Profile</a></div>
                 <div><a href="logout">Log out</a></div>
             {% else %}
-                <div><a href="login">Login</a></div>
-                <div><a href="signup">Sign up</a></div>
+                <div><a {% block activelogin %}{% endblock %}href="login">Login</a></div>
+                <div><a {% block activesignup %}{% endblock %}href="signup">Sign up</a></div>
             {% endif %}
 
         </div>
