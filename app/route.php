@@ -31,7 +31,3 @@ $app->get('/eventlist', 'App\Controllers\EventController:displayList')->setName(
 $app->post('/eventlist', 'App\Controllers\ResearchController:dispatch')->setName('search');
 
 $app->post('/eventlist', 'App\Controllers\EventController:displayList')->setName('eventlist');
-
-$app->post('/changeEventState', 'App\Controllers\EventController:changeEventState')->setName('updateEventState');
-
-$app->post('/addEventTrial', 'App\Controllers\EventController:addEventTrial')->setName('addEventTrial');
