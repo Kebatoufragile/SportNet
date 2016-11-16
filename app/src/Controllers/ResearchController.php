@@ -24,18 +24,17 @@ final class ResearchController extends AbstractController
 
       if(isset($_POST['search'])){
         $search = '%'.filter_var($_POST['search'], FILTER_SANITIZE_STRING).'%';
-        $users = User::where('username', 'like', $search)->get();
-        $events = Event::where('name', 'like', $search)->get();
+        $events = Event::where('name', 'like', $search)
+                        ->where('state', '!=', 'created')
+                        ->get();
 
         if(isset($_SESSION['user'])){
             $this->view['view']->render($response, 'eventlist.html.twig', array(
                 'user' => $_SESSION['user'],
-                'users' => $users,
                 'events' => $events
             ));
         }else{
             $this->view['view']->render($response, 'eventlist.html.twig', array(
-                'users' => $users,
                 'events' => $events
             ));
         }
@@ -44,4 +43,5 @@ final class ResearchController extends AbstractController
 
     return $response;
 
+    }
 }
