@@ -12,16 +12,34 @@
   </div>
   {% endif %}
 
+  {% if success != false %}
+  <div class="alert success" role="alert">
+      {{ success }}
+  </div>
+  {% endif %}
+
   {% if user != false && user.id == event.idOrg %}
 
   <div class="alingcenter">
       <h3>{{ event.name }}</h3> <br/>
-      <form action="updateEventState?idEvent={{ event.idEvent }}" method="post">
-        <input style="display:none" name="idEvent" type="radio" value={{ envent.idEvent }} checked />
+      <h4>Change event state</h4> <br/>
+      <form action="updateEventState" method="post">
+        <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
         <input name="state" type="radio" value="open" checked/> Open <br/>
         <input name="state" type="radio" value="closed"/> Close <br/>
         <input name="state" type="radio" value="finish"/>
         <button type="submit" class="btn">Validate event state</button>
+      </form>
+
+      <br/>
+      <h4>Add trials</h4>
+      <form action="addEventTrial" method="post">
+        <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
+        Name : <input name="trialName" type="text" required /> <br/>
+        Date : <input name="trialDate" type="text" required /> <br/>
+        Price : <input name="trialPrice" type="text" required /> <br/>
+        Description : <br/> <textarea name='trialDescription' rows="5" cols="40"></textarea> <br/>
+        <button type="submit" class="btn">Add trial</button>
       </form>
   </div>
 
