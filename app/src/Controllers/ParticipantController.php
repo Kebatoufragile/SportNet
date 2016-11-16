@@ -17,7 +17,7 @@ class ParticipantController extends AbstractController{
   }
 
   public function addToEvent(Request $request, Response $response, $args ){
-    
+
   }
 
 }
