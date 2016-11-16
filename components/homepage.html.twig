@@ -4,6 +4,17 @@
 
 {% block content %}
 
+    {% if error != false %}
+    <div class="alert danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {% if success != false %}
+    <div class="alert success" role="alert">
+        {{ success }}
+    </div>
+    {% endif %}
     <div class="aligncentre">
 
         <img class="text-center" src="/SportNet/public/assets/res/home.png"><br>

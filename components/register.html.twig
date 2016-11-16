@@ -11,12 +11,11 @@
         <div class="panel-body">
 
             {% if error != false %}
-            <div class="alert alert-danger" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error:</span>
+            <div class="alert danger" role="alert">
                 {{ error }}
             </div>
             {% endif %}
+
             <div class="aligncentre">
             <form action="signup" method="post" enctype="multipart/form-data">
 

@@ -7,13 +7,16 @@
   {# login #}
 
   {% if error != false %}
-  <div class="alert alert-danger" role="alert">
-      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-      <span class="sr-only">Error:</span>
+  <div class="alert danger" role="alert">
       {{ error }}
   </div>
   {% endif %}
 
+  {% if success != false %}
+  <div class="alert success" role="alert">
+      {{ success }}
+  </div>
+  {% endif %}
 <div class="aligncentre">
     <form action="login" method="post">
         <input name="username" type="text" autocomplete="off" placeholder="Username or email address" autofocus required/> <br/>

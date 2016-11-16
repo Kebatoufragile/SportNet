@@ -224,24 +224,33 @@ body {
   .btn-fancy:hover {
     background-image: linear-gradient(red, blue); }
 
-.alert {
-  font-family: "Arial";
-  font-size: 1.5rem;
-  color: white;
-  width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-radius: 20px;
-  border: 2px solid black;
-  text-align: center; }
-  .alert.alert-success {
-    background-color: #008000; }
-  .alert.alert-info {
-    background-color: #CD5C5C; }
-  .alert.alert-advert {
-    background-color: #FF8C00; }
-  .alert.alert-danger {
-    background-color: #FF0000; }
+    .alert {
+      padding: 20px;
+      color: white;
+      margin-bottom: 15px; }
+      .alert .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s; }
+      .alert .closebtn:hover {
+        color: black; }
+
+    .danger {
+      background-color: #f44336; }
+
+    .success {
+      background-color: #3beb2b; }
+
+    .info {
+      background-color: #2bd5eb; }
+
+    .warning {
+      background-color: #efc71a; }
 
 header {
   background-color: #A31818;
