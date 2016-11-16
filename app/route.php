@@ -17,3 +17,5 @@ $app->post('/login', 'App\Controllers\LoginController:authenticateUser')->setNam
 $app->get('/signup', 'App\Controllers\RegisterController:dispatch')->setName('signup');
 
 $app->post('/signup', 'App\Controllers\RegisterController:dispatchSubmit')->setName('submit');
+
+$app->get('/logout', 'App\Controllers\LogoutController:logout')->setName('logout');
