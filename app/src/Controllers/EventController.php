@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Event;
+use App\Models\Trial;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -62,60 +63,82 @@ class EventController extends AbstractController{
           'events' => $events
       ));
     }
-
   }
 
-  public function displayEventPage(Request $request, Response $response, $args){
-    if(isset($_GET["idEvent"])){
-      if(isset($_SESSION['user'])){
-        $this->view["view"]->render($response, 'event.html.twig', array(
-          "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
-          "user" => $_SESSION['user']
-        ));
-      }else{
-        $this->view["view"]->render($response, 'event.html.twig', array(
-          "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
-        ));
-      }
-
-    }else{
-      if(isset($_SESSION['user'])){
-        $this->view["view"]->render($response, 'homepage.html.twig', array(
-            "error" => "Event doesn't exist",
+    public function displayEventPage(Request $request, Response $response, $args){
+      if(isset($_GET["idEvent"])){
+        if(isset($_SESSION['user'])){
+          $this->view["view"]->render($response, 'event.html.twig', array(
+            "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
             "user" => $_SESSION['user']
+          ));
+        }else{
+          $this->view["view"]->render($response, 'event.html.twig', array(
+            "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+          ));
+        }
+
+      }else{
+        if(isset($_SESSION['user'])){
+          $this->view["view"]->render($response, 'homepage.html.twig', array(
+              "error" => "Event doesn't exist",
+              "user" => $_SESSION['user']
+          ));
+        }else{
+          $this->view["view"]->render($response, 'homepage.html.twig', array(
+              "error" => "Event doesn't exist"
+          ));
+        }
+      }
+    }
+
+    public function changeEventState(Request $request, Response $response, $args){
+      if(isset($_POST["state"]) && isset($_POST["idEvent"])){
+        $e = Event::where("idEvent", "like", $_POST["idEvent"])->first();
+        switch ($_POST["state"]) {
+          case 'open':
+            $e->state = "open";
+            $e->save();
+            break;
+          case 'closed':
+            $e->state = "closed";
+            $e->save();
+            break;
+          case 'finish':
+            $e->state = "finish";
+            $e->save();
+            break;
+          default:
+            $this->view["view"]->render($response, "event.html.twig", array(
+              "error" => "Wrong state"
+            ));
+            break;
+        }
+        $this->view['view']->render($response, 'event.html.twig', array(
+          "success" => "Your event have been updated"
         ));
       }else{
         $this->view["view"]->render($response, 'homepage.html.twig', array(
-            "error" => "Event doesn't exist"
+          "error" => "Event doesn't exist"
         ));
       }
     }
-  }
 
-  public function changeEventState(Request $request, Response $response, $args){
-    if(isset($_POST["state"]) && isset($_POST["idEvent"])){
-      $e = Event::where("idEvent", "like", $_POST["idEvent"])->first();
-      switch ($_POST["state"]) {
-        case 'open':
-          $e->state = "open";
-          $e->save();
-          break;
-        case 'closed':
-          $e->state = "closed";
-          $e->save();
-          break;
-        case 'finish':
-          $e->state = "finish";
-          $e->save();
-          break;
-        default:
-          $this->view["view"]->render($response, "event.html.twig", array(
-            "error" => "Wrong state"
-          ));
-          break;
-      }
+  public function addEventTrial(Request $request, Response $response, $args){
+    if(isset($_POST["trialName"]) && isset($_POST['trialDate']) && isset($_POST['trialPrice']) && isset($_POST['trialDescription']) && isset($_POST['idEvent'])){
+        $t = new Event();
+        $t->name = filter_var($_POST['trialName'], FILTER_SANITIZE_STRING);
+        $t->date = filter_var($_POST['trialDate'], FILTER_SANITIZE_STRING);
+        $t->price = filter_var($_POST['trialPrice'], FILTER_SANITIZE_STRING);
+        $t->description = filter_var($_POST['trialDescription'], FILTER_SANITIZE_STRING);
+        $t->idEvent = filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT);
+
+        $t->save();
+        $this->view["view"]->render($response, "event.html.twig", array(
+            "success" => "Your event have been updated"
+        ));
     }else{
-      $this->view["view"]->render($response, 'homepage.html.twig', array(
+      $this->view["view"]->render($response, "homepage.html.twig", array(
         "error" => "Event doesn't exist"
       ));
     }
