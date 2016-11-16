@@ -1,3 +1,9 @@
+body{
+    background-image: url("/SportNet/public/assets/res/background.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
 .title{
     margin-top:0;
 }
