@@ -33,3 +33,5 @@ $app->post('/eventlist', 'App\Controllers\ResearchController:dispatch')->setName
 $app->post('/changeEventState', 'App\Controllers\EventController:changeEventState')->setName('updateEventState');
 
 $app->post('/addEventTrial', 'App\Controllers\EventController:addEventTrial')->setName('addEventTrial');
+
+$app->get('/profile', 'App\Controllers\ProfileController:displayProfile')->setName('profile');

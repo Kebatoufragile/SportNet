@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block activeprofile %}class="activeheader"{% endblock %}
+
+{% block content %}
+
+    {# error #}
+    {% if error != false %}
+        <div class="alert danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {# success #}
+    {% if success != false %}
+        <div class="alert success" role="alert">
+            {{ success }}
+        </div>
+    {% endif %}
+
+    {{ user.username }}
+
+{% endblock %}
