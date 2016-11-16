@@ -20,4 +20,5 @@ $app->post('/signup', 'App\Controllers\RegisterController:dispatchSubmit')->setN
 
 
 
+
 $app->get('/logout', 'App\Controllers\LogoutController:logout')->setName('logout');
