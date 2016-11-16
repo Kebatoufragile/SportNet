@@ -20,9 +20,13 @@ class EventController extends AbstractController{
 
   public function dispatch(Request $request, Response $response, $args){
     if(isset($_SESSION['user'])){
-      $this->view['view']->render($response, 'createEvent.html.twig', array());
+      $this->view['view']->render($response, 'createEvent.html.twig', array(
+        "user" => $_SESSION['user']
+      ));
     }else{
-      $this->view['view']->render($response, 'register.html.twig', array());
+      $this->view['view']->render($response, 'login.html.twig', array(
+        "error" => "You must be log to perform this action"
+      ));
     }
 
     return $response;
