@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block activeprofile %}class="activeheader"{% endblock %}
+
+{% block content %}
+
+    {# error #}
+    {% if error != false %}
+        <div class="alert danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {# success #}
+    {% if success != false %}
+        <div class="alert success" role="alert">
+            {{ success }}
+        </div>
+    {% endif %}
+
+    <div class="aligncentre">
+        <h1>{{ user.username }}</h1><br>
+
+        <form action="modifyProfile" method="post">
+            <label for="emailProfile">Mail address : </label><input type="email" id="emailProfile" name="emailProfile" value="{{ user.email }}" autofocus required autocomplete="off"><br><br>
+            <label for="lastnameProfile">Last name : </label><input type="text" id="lastnameProfile" name="lastnameProfile" value="{{ user.last_name }}" required autocomplete="off"><br><br>
+            <label for="firstnameProfile">First name : </label><input type="text" id="firstnameProfile" name="firstnameProfile" value="{{ user.first_name }}" required autocomplete="off"><br><br>
+            <button class="btn" type="submit">Modify</button>
+        </form><br><br>
+
+        <form action="modifyPassword" method="post">
+            <label for="actualPassword">Actual password : </label><input type="password" id="actualPassword" name="actualPassword" autocomplete="off" required><br><br>
+            <label for="newPassword">New password : </label><input type="password" id="newPassword" name="newPassword" autocomplete="off" required><br><br>
+            <label for="newPasswordConf">New password confirmation : </label><input type="password" id="newPasswordConf" name="newPasswordConf" autocomplete="off" required><br><br>
+            <button class="btn" type="submit">Modify password</button>
+        </form>
+
+    </div>
+
+    <br><br><br>
+    {% if events|length > 0 %}
+        {% for event in events %}
+            <div class="jumbotron">
+                <h3>{{ event.name }}</h3>
+                <p><em>{{ event.description }}</em></p>
+                <p><strong>Discipline : {{ event.discipline }}</strong></p>
+                <a href="event?idEvent={{ event.idEvent }}"><button class="btn">See {{ event.name }}</button></a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}
