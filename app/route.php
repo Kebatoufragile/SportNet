@@ -30,7 +30,7 @@ $app->get('/eventlist', 'App\Controllers\EventController:displayList')->setName(
 
 $app->post('/eventlist', 'App\Controllers\ResearchController:dispatch')->setName('search');
 
-$app->post('/changeEventState', 'App\Controllers\EventController:changeEventState')->setName('updateEventState');
+$app->post('/updateEventState', 'App\Controllers\EventController:changeEventState')->setName('updateEventState');
 
 $app->post('/addEventTrial', 'App\Controllers\EventController:addEventTrial')->setName('addEventTrial');
 
@@ -43,4 +43,3 @@ $app->get('/modifyProfile', 'App\Controllers\ProfileController:displayProfile')-
 $app->get('/modifyPassword', 'App\Controllers\ProfileController:displayProfile')->setName('profile');
 
 $app->post('/modifyPassword', 'App\Controllers\ProfileController:modifyPassword')->setName('modifyPassword');
-
