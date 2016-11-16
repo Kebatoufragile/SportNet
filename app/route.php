@@ -17,7 +17,3 @@ $app->post('/login', 'App\Controllers\LoginController:authenticateUser')->setNam
 $app->get('/signup', 'App\Controllers\RegisterController:dispatch')->setName('signup');
 
 $app->post('/signup', 'App\Controllers\RegisterController:dispatchSubmit')->setName('submit');
-
-$app->get('/createEvent', 'App\Controllers\EventController:dispatch')->setName('createEvent');
-
-$app->post('/createEvent', 'App\Controllers\EventController:createEvent')->setName('createEvent');
