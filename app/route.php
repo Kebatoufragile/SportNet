@@ -27,3 +27,5 @@ $app->post('/createEvent', 'App\Controllers\EventController:createEvent')->setNa
 $app->get('/event', 'App\Controllers\EventController:displayEventPage')->setName('event');
 
 $app->get('/eventlist', 'App\Controllers\EventController:displayList')->setName('eventlist');
+
+$app->post('/eventlist', 'App\Controllers\ResearchController:dispatch')->setName('search');
