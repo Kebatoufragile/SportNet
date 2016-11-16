@@ -276,7 +276,8 @@ header {
   margin-left: 40px; }
   @media screen and (max-device-width: 480px) {
     .title {
-      font-size: 2rem; } }
+      font-size: 2rem;
+      width:200px;  } }
 
 .subtitle {
   font-family: "Arial";

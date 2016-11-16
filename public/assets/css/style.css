@@ -12,3 +12,9 @@ body{
     text-decoration: underline;
     font-weight:bold;
 }
+
+@media screen and (max-device-width: 600px){
+    .space{
+        margin-top:260px;
+    }
+}
