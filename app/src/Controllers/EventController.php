@@ -49,4 +49,60 @@ class EventController extends AbstractController{
       }
   }
 
+  public function displayEventPage(Request $request, Response $response, $args){
+    if(isset($_GET["idEvent"])){
+      if(isset($_SESSION['user'])){
+        $this->view["view"]->render($response, 'event.html.twig', array(
+          "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+          "user" => $_SESSION['user']
+        ));
+      }else{
+        $this->view["view"]->render($response, 'event.html.twig', array(
+          "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+        ));
+      }
+
+    }else{
+      if(isset($_SESSION['user'])){
+        $this->view["view"]->render($response, 'homepage.html.twig', array(
+            "error" => "Event doesn't exist",
+            "user" => $_SESSION['user']
+        ));
+      }else{
+        $this->view["view"]->render($response, 'homepage.html.twig', array(
+            "error" => "Event doesn't exist"
+        ));
+      }
+    }
+  }
+
+  public function changeEventState(Request $request, Response $response, $args){
+    if(isset($_POST["state"]) && isset($_POST["idEvent"])){
+      $e = Event::where("idEvent", "like", $_POST["idEvent"])->first();
+      switch ($_POST["state"]) {
+        case 'open':
+          $e->state = "open";
+          $e->save();
+          break;
+        case 'closed':
+          $e->state = "closed";
+          $e->save();
+          break;
+        case 'finish':
+          $e->state = "finish";
+          $e->save();
+          break;
+        default:
+          $this->view["view"]->render($response, "event.html.twig", array(
+            "error" => "Wrong state"
+          ));
+          break;
+      }
+    }else{
+      $this->view["view"]->render($response, 'homepage.html.twig', array(
+        "error" => "Event doesn't exist"
+      ));
+    }
+  }
+
 }
