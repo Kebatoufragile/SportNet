@@ -227,6 +227,7 @@ body {
     .alert {
       padding: 20px;
       color: white;
+      text-align: center;
       margin-bottom: 15px; }
       .alert .closebtn {
         margin-left: 15px;
