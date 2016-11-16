@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Event;
+use App\Models\Trial;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -44,10 +45,16 @@ class EventController extends AbstractController{
         $e->idOrg = $_SESSION['user']->id;
 
         $e->save();
-      }else{
-        echo "nop";
-      }
+
+        $this->view["view"]->render($response, "homepage.html.twig", array(
+            "success" => "Your event have been created"
+        ));
+  }else{
+    $this->view["view"]->render($response, "createEvent.html.twig", array(
+        "error" => "You must fill all the forms"
+    ));
   }
+}
 
   public function displayEventPage(Request $request, Response $response, $args){
     if(isset($_GET["idEvent"])){
@@ -98,11 +105,34 @@ class EventController extends AbstractController{
           ));
           break;
       }
+      $this->view['view']->render($response, 'event.html.twig', array(
+        "success" => "Your event have been updated"
+      ));
     }else{
       $this->view["view"]->render($response, 'homepage.html.twig', array(
         "error" => "Event doesn't exist"
       ));
     }
   }
+
+public function addEventTrial(Request $request, Response $response, $args){
+  if(isset($_POST["trialName"]) && isset($_POST['trialDate']) && isset($_POST['trialPrice']) && isset($_POST['trialDescription']) && isset($_POST['idEvent'])){
+      $t = new Event();
+      $t->name = filter_var($_POST['trialName'], FILTER_SANITIZE_STRING);
+      $t->date = filter_var($_POST['trialDate'], FILTER_SANITIZE_STRING);
+      $t->price = filter_var($_POST['trialPrice'], FILTER_SANITIZE_STRING);
+      $t->description = filter_var($_POST['trialDescription'], FILTER_SANITIZE_STRING);
+      $t->idEvent = filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT);
+
+      $t->save();
+      $this->view["view"]->render($response, "event.html.twig", array(
+          "success" => "Your event have been updated"
+      ));
+  }else{
+    $this->view["view"]->render($response, "homepage.html.twig", array(
+      "error" => "Event doesn't exist"
+    ));
+  }
+}
 
 }
