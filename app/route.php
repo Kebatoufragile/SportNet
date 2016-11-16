@@ -23,3 +23,7 @@ $app->get('/logout', 'App\Controllers\LogoutController:logout')->setName('logout
 $app->get('/createEvent', 'App\Controllers\EventController:dispatch')->setName('createEvent');
 
 $app->post('/createEvent', 'App\Controllers\EventController:createEvent')->setName('createEvent');
+
+$app->get('/event', 'App\Controllers\EventController:displayEventPage')->setName('event');
+
+$app->get('/eventlist', 'App\Controllers\EventController:displayList')->setName('eventlist');

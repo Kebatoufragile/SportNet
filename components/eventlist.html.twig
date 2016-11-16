@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block activeevents %}class="activeheader"{% endblock %}
+
+
+{% block content %}
+
+    {# error #}
+    {% if error != false %}
+        <div class="alert danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {# success #}
+    {% if success != false %}
+        <div class="alert success" role="alert">
+            {{ success }}
+        </div>
+    {% endif %}
+
+
+    {# if no events to display #}
+    {% if events|length > 0 %}
+
+        {% for event in events %}
+            <div class="jumbotron">
+                <h3>{{ event.name }}</h3>
+                <p><em>{{ event.description }}</em></p>
+                <p><strong>Discipline : {{ event.discipline }}</strong></p>
+                <a href="event?idEvent={{ event.idEvent }}"><button class="btn">See {{ event.name }}</button></a>
+            </div>
+        {% endfor %}
+
+    {% else %}
+        <div class="alert info">
+            No events to display.
+        </div>
+    {% endif %}
+
+{% endblock %}
