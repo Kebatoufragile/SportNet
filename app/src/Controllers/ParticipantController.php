@@ -16,6 +16,14 @@ class ParticipantController extends AbstractController{
     parent::__construct($view);
   }
 
+  public function dispatch(Request $request, Response $response, $args){
+
+      $this->view['view']->render($response, 'register.html.twig');
+
+      return $response;
+
+  }
+
   public function addToEvent(Request $request, Response $response, $args ){
 
   }
