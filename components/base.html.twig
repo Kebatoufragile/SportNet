@@ -31,7 +31,7 @@
 
 
             {% if user != false %}
-                <div><a {% block activeprofile %}{% endblock %}href="profile">Profile</a></div>
+                <div><a {% block activeprofile %}{% endblock %}href="profile">{{ user.username }}</a></div>
                 <div><a href="logout">Log out</a></div>
             {% else %}
                 <div><a {% block activelogin %}{% endblock %}href="login">Login</a></div>

@@ -10,7 +10,7 @@ $app->get('/home', 'App\Controllers\HomeController:dispatch')->setName('homepage
 
 $app->get('/users', 'App\Controllers\UserController:dispatch')->setName('userpage');
 
-$app->get('/login', 'App\Controllers\LoginController:form')->setName('login');
+$app->get('/login', 'App\Controllers\LoginController:renderForm')->setName('login');
 
 $app->post('/login', 'App\Controllers\LoginController:authenticateUser')->setName('login');
 

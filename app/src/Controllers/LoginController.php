@@ -23,59 +23,59 @@ class LoginController extends AbstractController{
 
     }
 
-    public function form(Request $request, Response $response, $args){
-        $res = $this->authenticateUser($request, $response, $args);
-
-        if($res == 1){
-            return $this->view['view']->render($response, 'login.html.twig', array(
-                'error' => 'Unable to log you, check your email address and your password, then try again.'
-            ));
-        }elseif($res == 2) {
-            return $this->view['view']->render($response, 'login.html.twig', array(
-                'error' => 'Unable to log you, fields are missing, please try again.'
-            ));
-        }else {
-            if(isset($_SESSION['user'])) {
-                return $this->view['view']->render($response, 'homepage.html.twig', array(
-                    'user' => $_SESSION['user'],
-                    'success' => 'You have been successfully logged.',
-                ));
-            }else
-                return $this->view['view']->render($response, 'homepage.html.twig');
-        }
+    public function renderForm(Request $request, Response $response, $args){
+        // if user already logged
+        if(isset($_SESSION['user']))
+            return $this->view['view']->render($response, 'homepage.html.twig');
+        else
+            return $this->view['view']->render($response, 'login.html.twig');
 
     }
 
 
     public function authenticateUser(Request $request, Response $response, $args){
 
-    if(isset($_POST['username']) && isset($_POST['password'])){
+        // if informations are filled
+        if(isset($_POST['username']) && isset($_POST['password'])){
 
-        $credentials = [
-            'email' => filter_var($_POST['username'], FILTER_SANITIZE_STRING),
-            'password' => filter_var($_POST['password'], FILTER_SANITIZE_EMAIL)
-        ];
+            $credentials = [
+                'email' => filter_var($_POST['username'], FILTER_SANITIZE_EMAIL),
+                'password' => filter_var($_POST['password'], FILTER_SANITIZE_STRING)
+            ];
 
-        $userInterface = $this->sentinel->authenticate($credentials);
+            $userInterface = $this->sentinel->authenticate($credentials);
 
-        if($userInterface instanceof userInterface){
-            $this->sentinel->login($userInterface, true);
+            // if login worked
+            if($userInterface instanceof userInterface){
+                $this->sentinel->login($userInterface, true);
 
-            $u = User::where('id', "like", $userInterface->getUserId())->first();
+                $u = User::where('id', "like", $userInterface->getUserId())->first();
 
-            $_SESSION["userid"] = $userInterface->getUserId();
-            $_SESSION["user"] = $u;
-            $this->view['view']->render($response, 'homepage.html.twig', array(
-                'error' => 'You have been successfully logged.',
-            ));
+                $_SESSION["userid"] = $userInterface->getUserId();
+                $_SESSION["user"] = $u;
+
+                return $this->view['view']->render($response, 'homepage.html.twig', array(
+                    'success' => 'You have been successfully logged.',
+                    'user' => $_SESSION['user']
+                ));
+
+            }else{
+
+                return $this->view['view']->render($response, 'login.html.twig', array(
+                    'error' => 'Unable to log you, check your email address and your password, then try again.'
+                ));
+
+            }
 
         }else{
-            return 1;
+
+            return $this->view['view']->render($response, 'login.html.twig', array(
+                'error' => 'Unable to log you, fields are missing, please try again.'
+            ));
+
         }
-    }else{
-        return 2;
+
     }
-}
 
 
 }
