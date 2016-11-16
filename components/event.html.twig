@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+{# Event page #}
+
+  {% if error != false %}
+  <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{ error }}
+  </div>
+  {% endif %}
+
+  {% if user != false && user.id == event.idOrg %}
+
+  <div class="alingcenter">
+      <h3>{{ event.name }}</h3> <br/>
+      <form action="updateEventState?idEvent={{ event.idEvent }}" method="post">
+        <input style="display:none" name="idEvent" type="radio" value={{ envent.idEvent }} checked />
+        <input name="state" type="radio" value="open" checked/> Open <br/>
+        <input name="state" type="radio" value="closed"/> Close <br/>
+        <input name="state" type="radio" value="finish"/>
+        <button type="submit" class="btn">Validate event state</button>
+      </form>
+  </div>
+
+  {% else %}
+
+
+      <div class="aligncenter">
+        <h3>{{ event.name }}</h3> <br/>
+
+        <p> Le {{ event.dates }} à {{ even.location }}</p>
+        <h3>Description</h3> <br/>
+        <p> {{ event.description }} </p>
+      </div>
+
+  {% endif %}
+
+
+{% endblock %}
