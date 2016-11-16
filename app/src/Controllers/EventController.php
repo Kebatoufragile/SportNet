@@ -29,7 +29,7 @@ class EventController extends AbstractController{
   }
 
   public function createEvent(Request $request, Response $response, $args){
-      if(isset($_POST['name']) && isset($_POST['location']) && isset($_POST['discipline']) && isset($_POST['date']) && isset($_POST['state']) && isset($_POST['description'])){
+      if(isset($_POST['name']) && isset($_POST['location']) && isset($_POST['discipline']) && isset($_POST['date']) && isset($_POST['description'])){
         $e = new Event();
         $e->name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
         $e->location = filter_var($_POST['location'], FILTER_SANITIZE_STRING);
@@ -40,6 +40,8 @@ class EventController extends AbstractController{
         $e->idOrg = $_SESSION['user']->id;
 
         $e->save();
+      }else{
+        echo "nop";
       }
   }
 
