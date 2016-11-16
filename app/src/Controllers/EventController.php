@@ -35,7 +35,7 @@ class EventController extends AbstractController{
         $e->location = filter_var($_POST['location'], FILTER_SANITIZE_STRING);
         $e->discipline = filter_var($_POST['discipline'], FILTER_SANITIZE_STRING);
         $e->dates = filter_var($_POST['date'], FILTER_SANITIZE_STRING);
-        $e->state = filter_var($_POST['state'], FILTER_SANITIZE_STRING);
+        $e->state = "created";
         $e->description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
         $e->idOrg = $_SESSION['user']->id;
 
