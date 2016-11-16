@@ -39,7 +39,6 @@ final class ResearchController extends AbstractController
                 'events' => $events
             ));
         }
-      }
     }else
         header('Location: index.php');
 
