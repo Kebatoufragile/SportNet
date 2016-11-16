@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Event;
 use App\Models\User;
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -21,6 +22,7 @@ class ProfileController extends AbstractController{
     public function displayProfile(Request $request, Response $response, $args){
 
         if(isset($_SESSION['user'])){
+
             $events = Event::where('idOrg', 'like', $_SESSION['user']->id)->get();
 
             $this->view['view']->render($response, 'profile.html.twig', array(
@@ -126,6 +128,7 @@ class ProfileController extends AbstractController{
 
                     // password not matching
                     $this->view['view']->render($response, 'profile.html.twig', array(
+                        'events' => $events,
                         'user' => $_SESSION['user'],
                         'error' => 'The password you entered does not match with your actual password.'
                     ));
@@ -137,5 +140,4 @@ class ProfileController extends AbstractController{
             header('Location: index.php');
 
     }
-
 }

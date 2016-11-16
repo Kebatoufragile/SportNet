@@ -43,3 +43,4 @@ $app->get('/modifyProfile', 'App\Controllers\ProfileController:displayProfile')-
 $app->get('/modifyPassword', 'App\Controllers\ProfileController:displayProfile')->setName('profile');
 
 $app->post('/modifyPassword', 'App\Controllers\ProfileController:modifyPassword')->setName('modifyPassword');
+
