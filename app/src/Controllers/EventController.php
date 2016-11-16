@@ -37,21 +37,9 @@ class EventController extends AbstractController{
         $e->dates = filter_var($_POST['date'], FILTER_SANITIZE_STRING);
         $e->state = filter_var($_POST['state'], FILTER_SANITIZE_STRING);
         $e->description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
-        $e->idOrg = $_SESSION['userId'];
+        $e->idOrg = $_SESSION['user']->id;
 
         $e->save();
-
-        /******* Auto test ********/
-
-        $testE = Event::where("idEvent", "like", $_POST['name'])->first();
-
-        if($testE == NULL){
-          echo "Marche pas";
-        }else{
-          echo "OK";
-        }
-
-        /******* Fin auto test *******/
       }
   }
 
