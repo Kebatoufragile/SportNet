@@ -20,14 +20,14 @@
 
   {% if user != false and user.id == event.idOrg %}
 
-  <div class="alingcenter">
+  <div class="aligncentre">
       <h3>{{ event.name }}</h3> <br/>
       <h4>Change event state</h4> <br/>
       <form action="updateEventState" method="post">
         <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
         <input name="state" type="radio" value="open" checked/> Open <br/>
         <input name="state" type="radio" value="closed"/> Close <br/>
-        <input name="state" type="radio" value="finish"/>
+        <input name="state" type="radio" value="finish"/> Finish <br/>
         <button type="submit" class="btn">Validate event state</button>
       </form>
 
@@ -36,7 +36,7 @@
       <form action="addEventTrial" method="post">
         <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
         Name : <input name="trialName" type="text" required /> <br/>
-        Date : <input name="trialDate" type="text" required /> <br/>
+        Date : <input name="trialDate" type="text" id="datepicker" required> <br/>
         Price : <input name="trialPrice" type="text" required /> <br/>
         Description : <br/> <textarea name='trialDescription' rows="5" cols="40"></textarea> <br/>
         <button type="submit" class="btn">Add trial</button>
