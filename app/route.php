@@ -35,3 +35,11 @@ $app->post('/changeEventState', 'App\Controllers\EventController:changeEventStat
 $app->post('/addEventTrial', 'App\Controllers\EventController:addEventTrial')->setName('addEventTrial');
 
 $app->get('/profile', 'App\Controllers\ProfileController:displayProfile')->setName('profile');
+
+$app->post('/modifyProfile', 'App\Controllers\ProfileController:modifyProfile')->setName('modifyProfile');
+
+$app->get('/modifyProfile', 'App\Controllers\ProfileController:displayProfile')->setName('profile');
+
+$app->get('/modifyPassword', 'App\Controllers\ProfileController:displayProfile')->setName('profile');
+
+$app->post('/modifyPassword', 'App\Controllers\ProfileController:modifyPassword')->setName('modifyPassword');
