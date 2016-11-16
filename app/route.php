@@ -26,4 +26,8 @@ $app->post('/createEvent', 'App\Controllers\EventController:createEvent')->setNa
 
 $app->get('/event', 'App\Controllers\EventController:displayEventPage')->setName('event');
 
-$app->get('/eventlist', 'App\Controllers\EventController:displayList')->setName('eventlist');
+$app->post('/eventlist', 'App\Controllers\EventController:displayList')->setName('eventlist');
+
+$app->post('/changeEventState', 'App\Controllers\EventController:changeEventState')->setName('updateEventState');
+
+$app->post('/addEventTrial', 'App\Controllers\EventController:addEventTrial')->setName('addEventTrial');
