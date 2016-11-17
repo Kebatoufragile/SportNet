@@ -178,8 +178,28 @@ class EventController extends AbstractController{
         }
     }
 
-    public function generateURL(Request $request, Response $response, $args){
 
+    public function simplifyURL($path){
+      $r = array();
+      foreach(explode('/', $path) as $p){
+        if($p == '..'){
+          array_pop($r);
+        }elseif ($p != "." && strlen($p)) {
+          $r[] = $p;
+        }
+      }
+      $r = implode('/', $r);
+      if($path[0] == '/'){
+        $r = '/$r';
+      }
+      return $r;
     }
+
+    /*
+      $u = parse_url($dirtyUrl);
+      $u['path'] = simplify($u['path']);
+      $clean_url = "{$u['scheme']}://{$u['host']}{$u['path']}";
+    */
+
 
 }
