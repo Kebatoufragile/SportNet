@@ -99,7 +99,8 @@ class EventController extends AbstractController{
             }else{
                 $this->view["view"]->render($response, 'event.html.twig', array(
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
-                    'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get()
+                    'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
+                    'dateEvent' => Event::where("idEvent", "like", $_GET['idEvent'])->first()->dates
                 ));
             }
 
