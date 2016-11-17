@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model{
+class Inscription extends Model{
 
-    protected $table = "event";
+    protected $table = "inscription";
     public $timestamps = false;
 
 }
