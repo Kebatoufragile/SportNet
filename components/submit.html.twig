@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="panel panel-primary panel-register text-center">
+        <div class="panel-heading aligncentre"><h1 class="panel-title">Submit for trial</h1></div><br/>
+        <div class="panel-body">
+
+        {% if success != false %}
+        <div class="alert success" role="alert">
+            {{ success }}
+        </div>
+        {% endif %}
+
+        <div class="aligncentre">
+            <h2>Participant number : {{ numP }}</h2>
+            <h2>BIB number : {{ dossard }}</h2>
+
+            <form action="homepage">
+              <button class="btn btn-primary" type="submit">Pay for registration</button>
+            </form>
+        </div>
+
+        </div>
+    </div>

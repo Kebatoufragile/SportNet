@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="panel panel-primary panel-register text-center">
-        <div class="panel-heading aligncentre"><h1 class="panel-title">Registration for trials</h1></div><br/>
+        <div class="panel-heading aligncentre"><h1 class="panel-title">Registration for trial</h1></div><br/>
         <div class="panel-body">
 
         {% if error != false %}
@@ -19,7 +19,7 @@
         {% endif %}
 
         <div class="aligncentre">
-        <form action="participant" method="post" enctype="multipart/form-data">
+        <form action="submitparticipant" method="post" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="lastNameParticipant">Last name</label>
