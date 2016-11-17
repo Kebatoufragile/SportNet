@@ -81,8 +81,16 @@
                                 <input type="number" value="{{ trial.idTrial }}" name="idTrial" style="display:none">
                                 <button class="btn" type="submit">Download Participants</button>
                             </form>
-
                         </td>
+
+                        <td class="cell">
+                            <form action="upload" method="post" enctype="multipart/form-data">
+                                <input type="number" value="{{ trial.idTrial }}" name="idTrial" style="display:none">
+                                <input type="file" name="results" required><br>
+                                <button class="btn" type="submit">UploadResults</button>
+                            </form>
+                        </td>
+
                     {% else %}
                         <td class="cell">
                             <form action="participant?idTrial={{ trial.idTrial }}" method="get">
