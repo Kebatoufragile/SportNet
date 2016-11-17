@@ -77,10 +77,11 @@
                     <td class="cell">{{ trial.price }}</td>
                     {% if user.id == event.idOrg %}
                         <td class="cell">
-                            <form action="../public/downloadParticipants.php" method="post">
-                                <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
+                            <form action="download" method="get">
+                                <input type="number" value="{{ trial.idTrial }}" name="idTrial" style="display:none">
                                 <button class="btn" type="submit">Download Participants</button>
                             </form>
+
                         </td>
                     {% endif %}
                 </tr>
