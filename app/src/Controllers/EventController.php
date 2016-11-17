@@ -68,13 +68,16 @@ class EventController extends AbstractController{
     public function displayEventPage(Request $request, Response $response, $args){
       if(isset($_GET["idEvent"])){
         if(isset($_SESSION['user'])){
+
           $this->view["view"]->render($response, 'event.html.twig', array(
             "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
-            "user" => $_SESSION['user']
+            "user" => $_SESSION['user'],
+            "dateEvent" => Event::where("idEvent", "like", $_GET["idEvent"])->first()->dates
           ));
         }else{
           $this->view["view"]->render($response, 'event.html.twig', array(
             "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+            "dateEvent" => Event::where("idEvent", "like", $_GET["idEvent"])->first()->dates
           ));
         }
 
