@@ -43,10 +43,28 @@ class EventController extends AbstractController{
       $e->state = "created";
       $e->description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
       $e->idOrg = $_SESSION['user']->id;
-
-      $e->save();
+      if($e->save()!=false){
+        if(isset($_SESSION['user'])){
+              $this->view['view']->render($response, 'event.html.twig', array(
+                'event' => $e,
+                'user' => $_SESSION['user'],
+                'success' => "Event successfully created"
+            ));
+          }else{
+            $this->view["view"]->render($response, 'event.html.twig', array(
+                'event' => $e,
+                'success' => "Event successfully created"
+            ));
+          }
+      }else{
+        $this->view['view']->render($response, 'createEvent.html.twig', array(
+          'error' => 'Error when creating event'
+        ));
+      }
     }else{
-      echo "nop";
+      $this->view['view']->render($response, 'createEvent.html.twig', array(
+          'error' => "You must fill all the forms"
+      ));
     }
   }
 
@@ -118,7 +136,9 @@ class EventController extends AbstractController{
             break;
         }
         $this->view['view']->render($response, 'event.html.twig', array(
-          "success" => "Your event have been updated"
+          "success" => "Your event have been updated",
+          "user" => $_SESSION['user'],
+          "event" => $e
         ));
       }else{
         $this->view["view"]->render($response, 'homepage.html.twig', array(
