@@ -2,83 +2,91 @@
 
 {% block content %}
 
-{# Event page #}
+    {# Event page #}
 
-  {% if error != false %}
-  <div class="alert alert-danger" role="alert">
-      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-      <span class="sr-only">Error:</span>
-      {{ error }}
-  </div>
-  {% endif %}
+    {% if error != false %}
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{ error }}
+        </div>
+    {% endif %}
 
-  {% if success != false %}
-  <div class="alert success" role="alert">
-      {{ success }}
-  </div>
-  {% endif %}
+    {% if success != false %}
+        <div class="alert success" role="alert">
+            {{ success }}
+        </div>
+    {% endif %}
 
-  {% if user != false and user.id == event.idOrg %}
+    {% if user != false and user.id == event.idOrg %}
 
-  <div class="aligncentre">
-      <h3>{{ event.name }}</h3> <br/>
-      <h4>Change event state</h4> <br/>
-      <form action="updateEventState" method="post">
-        <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
-        <input name="state" type="radio" value="open" checked/> Open <br/>
-        <input name="state" type="radio" value="closed"/> Close <br/>
-        <input name="state" type="radio" value="finish"/> Finish <br/>
-        <button type="submit" class="btn">Validate event state</button>
-      </form>
+        <div class="aligncentre">
+            <h3>{{ event.name }}</h3> <br/>
+            <h4>Change event state</h4> <br/>
+            <form action="updateEventState" method="post">
+                <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
+                <input name="state" type="radio" value="open" checked/> Open <br/>
+                <input name="state" type="radio" value="closed"/> Close <br/>
+                <input name="state" type="radio" value="finish"/> Finish <br/>
+                <button type="submit" class="btn">Validate event state</button>
+            </form>
 
-      <br/>
-      <h4>Add trials</h4>
-      <form action="addEventTrial" method="post">
-        <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
-        Name : <input name="trialName" type="text" required /> <br/>
-        Date : <input name="trialDate" type="text" id="datepicker" required> <br/>
-        Price : <input name="trialPrice" type="text" required /> <br/>
-        Description : <br/> <textarea name='trialDescription' rows="5" cols="40"></textarea> <br/>
-        <button type="submit" class="btn">Add trial</button>
-      </form>
-  </div>
+            <br/>
+            <h4>Add trials</h4>
+            <form action="addEventTrial" method="post">
+                <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
+                Name : <input name="trialName" type="text" required /> <br/>
+                Date : <input name="trialDate" type="text" id="datepicker" required> <br/>
+                Price : <input name="trialPrice" type="text" required /> <br/>
+                Description : <br/> <textarea name='trialDescription' rows="5" cols="40"></textarea> <br/>
+                <button type="submit" class="btn">Add trial</button>
+            </form>
+        </div>
 
-  {% else %}
+    {% else %}
 
 
-      <div class="aligncentre">
-        <h3>{{ event.name }}</h3> <br/>
+        <div class="aligncentre">
+            <h3>{{ event.name }}</h3> <br/>
 
-        <p> Le <strong>{{ dateEvent }}</strong> à <strong>{{ event.location }}</strong></p>
-        <h3>Description</h3> <br/>
-        <p> {{ event.description }} </p>
-        <br/>
+            <p> Le <strong>{{ dateEvent }}</strong> à <strong>{{ event.location }}</strong></p>
+            <h3>Description</h3> <br/>
+            <p> {{ event.description }} </p>
+            <br/>
 
-        <h3>Inscrire des participants</h3> <br/>
+            <h3>Inscrire des participants</h3> <br/>
 
-      </div>
+        </div>
 
-  {% endif %}
+    {% endif %}
 
     <div class="aligncentre">
-      <h3>Liste des épreuves</h3> <br/>
-      <table>
-        <tr>
-          <th class="cell entete">Name</th>
-          <th class="cell entete">Description</th>
-          <th class="cell entete">Date</th>
-          <th class="cell entete">Price</th>
-        </tr>
-      {% for trial in trials %}
-        <tr class="ligne1">
-          <td class="cell">{{ trial.name }}</td>
-          <td class="cell">{{ trial.description }}</td>
-          <td class="cell">{{ trial.date }} {{ trial.date }}</td>
-          <td class="cell">{{ trial.price }} {{ trial.price }}</td>
-        </tr>
-      {% endfor %}
+        <h3>Liste des épreuves</h3> <br/>
+        <table>
+            <tr>
+                <th class="cell entete">Name</th>
+                <th class="cell entete">Description</th>
+                <th class="cell entete">Date</th>
+                <th class="cell entete">Price</th>
+            </tr>
+            {% for trial in trials %}
+                <tr class="ligne1">
+                    <td class="cell">{{ trial.name }}</td>
+                    <td class="cell">{{ trial.description }}</td>
+                    <td class="cell">{{ trial.date }}</td>
+                    <td class="cell">{{ trial.price }}</td>
+                    {% if user.id == event.idOrg %}
+                        <td class="cell">
+                            <form action="../public/downloadParticipants.php" method="post">
+                                <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
+                                <button class="btn" type="submit">Download Participants</button>
+                            </form>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
 
-      </table>
+        </table>
 
     </div>
 

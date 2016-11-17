@@ -1,5 +1,9 @@
 <?php
 
+define("PATH_ROOT", __DIR__ . '/');
+
+require PATH_ROOT . '../app/server.php';
+
 $trial = \App\Models\Trial::where('idTrial', 'like', $_POST['idTrial'])->first();
 
 if(!is_null($trial)) {
