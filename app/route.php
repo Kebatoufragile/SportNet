@@ -46,4 +46,4 @@ $app->post('/modifyPassword', 'App\Controllers\ProfileController:modifyPassword'
 
 $app->get('/participant', 'App\Controllers\ParticipantController:dispatch')->setName('participant');
 
-$app->get('/submitparticipant', 'App\Controllers\ParticipantController:dispatc')->setName('submitparticipant');
+$app->post('/submitparticipant', 'App\Controllers\ParticipantController:dispatchSubmit')->setName('submitparticipant');
