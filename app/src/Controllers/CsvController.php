@@ -73,4 +73,23 @@ class CsvController extends AbstractController{
         }
     }
 
+    public function uploadResults(Request $request, Response $response, $args){
+
+        if(isset($_FILES['uploadResults']['tmp_name'])){
+
+            $file = file_get_contents($_FILES['uploadResults']['tmp_name']);
+
+            echo '<script>alert('.$file.')</script>';
+
+
+        }else{
+            if (isset($_SESSION['user'])) {
+                $this->view['view']->render($response, 'homepage.html.twig', array(
+                    'user' => $_SESSION['user']
+                ));
+            } else {
+                $this->view['view']->render($response, 'homepage.html.twig');
+            }
+        }
+    }
 }
