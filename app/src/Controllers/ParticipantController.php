@@ -1,6 +1,6 @@
 <?php
 
-namespace App\controllers;
+namespace App\Controllers;
 
 use App\Models\Participant;
 use App\Models\Inscription;
@@ -18,7 +18,9 @@ class ParticipantController extends AbstractController{
 
   public function dispatch(Request $request, Response $response, $args){
 
-      $this->view['view']->render($response, 'register.html.twig');
+      $this->view['view']->render($response, 'participant.html.twig', array(
+        'idTrial' => $_GET['idTrial']
+      ));
 
       return $response;
 
@@ -26,16 +28,14 @@ class ParticipantController extends AbstractController{
 
   public function registerParticipant(){
 
-    if (isset($_POST['lastNameParticipant']) && isset($_POST['firstNameParticipant']) && isset($_POST['emailParticipant']) && isset($_POST['birthdayParticipant'])){
+    if (isset($_POST['lastNameParticipant']) && isset($_POST['firstNameParticipant']) && isset($_POST['emailParticipant']) && isset($_POST['ageParticipant'])){
 
-      if (is_null(Participant::where('email', 'like', $_POST['emailParticipant']))){
-
-        $p = new Particpant();
+        $p = new Participant();
         $p->lastname = filter_var($_POST['lastNameParticipant'], FILTER_SANITIZE_STRING);
         $p->firstname = filter_var($_POST['firstNameParticipant'], FILTER_SANITIZE_STRING);
         $p->mail = filter_var($_POST['emailParticipant'], FILTER_SANITIZE_EMAIL);
-        $p->age = filter_var($_POST['ageParticipant'], FILTER_SANITIZE_NUMBER_INT);
-        $dossardcount = Inscription::where('idTrial', 'like', $_GET['idTrial'])->count();
+        $p->age = filter_var($_POST['ageParticipant'], FILTER_SANITIZE_STRING);
+        $dossardcount = Inscription::where('idTrial', '=', $_GET['idTrial'])->count();
         $p->bib = $dossardcount+1;
 
         $p->save();
@@ -48,10 +48,6 @@ class ParticipantController extends AbstractController{
         $_SESSION['id'] = $p->idParticipant;
         return 4;
 
-      } else {
-        return 3; //email manquant
-      }
-
     } else {
       return 2;//information manquante
     }
@@ -62,7 +58,7 @@ class ParticipantController extends AbstractController{
 
     $res=$this->registerParticipant();
 
-    $p=Participant::where('idParticipant', 'like', $_SESSION['id']);
+    $p=Participant::where('idParticipant', '=', $_SESSION['id'])->first();
 
     switch($res) {
         case 2:
@@ -70,13 +66,8 @@ class ParticipantController extends AbstractController{
                 'error' => 'Unable to register you, informations are missing, please try again.'
             ));
             break;
-        case 3:
-            $this->view['view']->render($response, 'participant.html.twig', array(
-                'error' => 'Mail address already used.'
-            ));
-            break;
         case 4:
-            $this->view['view']->render($response, 'login.html.twig', array(
+            $this->view['view']->render($response, 'submit.html.twig', array(
                 'success' => 'You have been successfully registered.',
                 'dossard' => $p->bib,
                 'numP' => $p->idParticipant

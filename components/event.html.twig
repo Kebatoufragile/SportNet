@@ -83,6 +83,13 @@
                             </form>
 
                         </td>
+                    {% else %}
+                        <td class="cell">
+                            <form action="participant?idTrial={{ trial.idTrial }}" method="get">
+                                <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
+                                <button class="btn" type="submit">Sign up</button>
+                            </form>
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}
