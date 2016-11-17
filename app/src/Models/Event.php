@@ -9,4 +9,5 @@ class Event extends Model
   protected $table = "event";
   protected $primaryKey = "idEvent";
   public $timestamps = false;
+
 }
