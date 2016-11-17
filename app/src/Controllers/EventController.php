@@ -93,11 +93,13 @@ class EventController extends AbstractController{
             if(isset($_SESSION['user'])){
                 $this->view["view"]->render($response, 'event.html.twig', array(
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
-                    "user" => $_SESSION['user']
+                    "user" => $_SESSION['user'],
+                    'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get()
                 ));
             }else{
                 $this->view["view"]->render($response, 'event.html.twig', array(
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+                    'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get()
                 ));
             }
 
@@ -149,8 +151,7 @@ class EventController extends AbstractController{
     }
 
 
-    public function addEventTrial(Request $request, Response $response, $args)
-    {
+    public function addEventTrial(Request $request, Response $response, $args){
         if (isset($_POST["trialName"]) && isset($_POST['trialDate']) && isset($_POST['trialPrice']) && isset($_POST['trialDescription']) && isset($_POST['idEvent'])) {
             $t = new Trial();
             $t->name = filter_var($_POST['trialName'], FILTER_SANITIZE_STRING);
@@ -165,13 +166,19 @@ class EventController extends AbstractController{
             $t->idEvent = filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT);
             $t->save();
             $this->view["view"]->render($response, "event.html.twig", array(
-                "success" => "Your event has been updated."
+                "success" => "Your event has been updated.",
+                "user" => $_SESSION['user']
             ));
         } else {
             $this->view["view"]->render($response, "homepage.html.twig", array(
-                "error" => "Event doesn't exist."
+                "error" => "Event doesn't exist.",
+                "user" => $_SESSION['user']
             ));
         }
+    }
+
+    public function generateURL(Request $request, Response $response, $args){
+
     }
 
 }
