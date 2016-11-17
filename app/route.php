@@ -47,3 +47,5 @@ $app->post('/modifyPassword', 'App\Controllers\ProfileController:modifyPassword'
 $app->get('/participant', 'App\Controllers\ParticipantController:dispatch')->setName('participant');
 
 $app->get('/submitparticipant', 'App\Controllers\ParticipantController:dispatc')->setName('submitparticipant');
+
+$app->get('/download', 'App\Controllers\CsvController:downloadParticipants')->setName('download');
