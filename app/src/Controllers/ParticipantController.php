@@ -60,13 +60,13 @@ class ParticipantController extends AbstractController{
             ));
             break;
         case 3:
-            $this->view['view']->render($response, 'login.html.twig', array(
-                'success' => "You have been successfully registered."
+            $this->view['view']->render($response, 'participant.html.twig', array(
+                'error' => 'Mail address already used.'
             ));
             break;
         case 4:
-            $this->view['view']->render($response, 'participant.html.twig', array(
-                'error' => 'Mail address already used.'
+            $this->view['view']->render($response, 'login.html.twig', array(
+                'success' => "You have been successfully registered."
             ));
             break;
         default:
