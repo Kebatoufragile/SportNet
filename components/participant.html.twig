@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="panel panel-primary panel-register text-center">
+        <div class="panel-heading aligncentre"><h1 class="panel-title">Registration for trials</h1></div><br/>
+        <div class="panel-body">
+
+        {% if error != false %}
+        <div class="alert danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if success != false %}
+        <div class="alert success" role="alert">
+            {{ success }}
+        </div>
+        {% endif %}
+
+        <div class="aligncentre">
+        <form action="participant" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="lastNameParticipant">Last name</label>
+                <input class="form-control" name="nom" type="text" autocomplete="off" placeholder="Last Name" required/>
+            </div><br/>
+
+            <div class="form-group">
+                <label for="firstNameParticipant">First name</label>
+                <input class="form-control" name="prenom" type="text" autocomplete="off" placeholder="First Name" required/>
+            </div><br/>
+
+            <div class="form-group">
+                <label for="emailParticipant">Email address</label>
+                <input class="form-control" name="email" type="email" autocomplete="off" placeholder="Email Address" required/>
+            </div><br/>
+
+            <div class="form-group">
+                <label for="birthdayParticipant">Birthday</label>
+                <input class="form-control" name="birthday" type="date" autocomplete="off" placeholder="Birthday" required/>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
