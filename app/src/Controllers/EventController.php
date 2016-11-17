@@ -18,6 +18,7 @@ class EventController extends AbstractController{
 
     }
 
+
     public function dispatch(Request $request, Response $response, $args){
         if(isset($_SESSION['user'])){
             $this->view['view']->render($response, 'createEvent.html.twig', array(
@@ -32,8 +33,9 @@ class EventController extends AbstractController{
         return $response;
     }
 
-    public function createEvent(Request $request, Response $response, $args){
-        if(isset($_POST['name']) && isset($_POST['location']) && isset($_POST['discipline']) && isset($_POST['date']) && isset($_POST['description'])){
+    public function createEvent(Request $request, Response $response, $args)
+    {
+        if (isset($_POST['name']) && isset($_POST['location']) && isset($_POST['discipline']) && isset($_POST['date']) && isset($_POST['description'])) {
             $e = new Event();
             $e->name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
             $e->location = filter_var($_POST['location'], FILTER_SANITIZE_STRING);
@@ -42,10 +44,28 @@ class EventController extends AbstractController{
             $e->state = "created";
             $e->description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
             $e->idOrg = $_SESSION['user']->id;
-
-            $e->save();
-        }else{
-            echo "nop";
+            if ($e->save() != false) {
+                if (isset($_SESSION['user'])) {
+                    $this->view['view']->render($response, 'event.html.twig', array(
+                        'event' => $e,
+                        'user' => $_SESSION['user'],
+                        'success' => "Event successfully created."
+                    ));
+                } else {
+                    $this->view["view"]->render($response, 'event.html.twig', array(
+                        'event' => $e,
+                        'success' => "Event successfully created."
+                    ));
+                }
+            } else {
+                $this->view['view']->render($response, 'createEvent.html.twig', array(
+                    'error' => 'Error when creating event.'
+                ));
+            }
+        } else {
+            $this->view['view']->render($response, 'createEvent.html.twig', array(
+                'error' => "You must fill all the forms."
+            ));
         }
     }
 
@@ -53,14 +73,20 @@ class EventController extends AbstractController{
         $events = Event::where('state', 'not like', 'created')->get()->reverse();
 
         if(isset($_SESSION['user'])){
-            $this->view['view']->render($response, 'eventlist.html.twig', array(
-                'events' => $events,
-                'user' => $_SESSION['user']
+
+            $this->view["view"]->render($response, 'event.html.twig', array(
+                "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+                "user" => $_SESSION['user'],
+                "dateEvent" => Event::where("idEvent", "like", $_GET["idEvent"])->first()->dates
             ));
+
         }else{
-            $this->view['view']->render($response, 'eventlist.html.twig', array(
-                'events' => $events
+
+            $this->view["view"]->render($response, 'event.html.twig', array(
+                "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+                "dateEvent" => Event::where("idEvent", "like", $_GET["idEvent"])->first()->dates
             ));
+
         }
     }
 
@@ -119,24 +145,31 @@ class EventController extends AbstractController{
         }else{
             $this->view["view"]->render($response, 'homepage.html.twig', array(
                 "error" => "Event doesn't exist."
+
             ));
         }
     }
 
-    public function addEventTrial(Request $request, Response $response, $args){
-        if(isset($_POST["trialName"]) && isset($_POST['trialDate']) && isset($_POST['trialPrice']) && isset($_POST['trialDescription']) && isset($_POST['idEvent'])){
-            $t = new Event();
+
+    public function addEventTrial(Request $request, Response $response, $args)
+    {
+        if (isset($_POST["trialName"]) && isset($_POST['trialDate']) && isset($_POST['trialPrice']) && isset($_POST['trialDescription']) && isset($_POST['idEvent'])) {
+            $t = new Trial();
             $t->name = filter_var($_POST['trialName'], FILTER_SANITIZE_STRING);
-            $t->date = filter_var($_POST['trialDate'], FILTER_SANITIZE_STRING);
+            $datetmp = explode('/', $_POST['trialDate']);
+            $day = $datetmp[1];
+            $month = $datetmp[0];
+            $year = $datetmp[2];
+            $date = $year . '-' . $month . '-' . $day;
+            $t->date = $date;
             $t->price = filter_var($_POST['trialPrice'], FILTER_SANITIZE_STRING);
             $t->description = filter_var($_POST['trialDescription'], FILTER_SANITIZE_STRING);
             $t->idEvent = filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT);
-
             $t->save();
             $this->view["view"]->render($response, "event.html.twig", array(
                 "success" => "Your event has been updated."
             ));
-        }else{
+        } else {
             $this->view["view"]->render($response, "homepage.html.twig", array(
                 "error" => "Event doesn't exist."
             ));
