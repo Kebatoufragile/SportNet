@@ -74,17 +74,15 @@ class EventController extends AbstractController{
 
         if(isset($_SESSION['user'])){
 
-            $this->view["view"]->render($response, 'event.html.twig', array(
-                "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
-                "user" => $_SESSION['user'],
-                "dateEvent" => Event::where("idEvent", "like", $_GET["idEvent"])->first()->dates
+            $this->view["view"]->render($response, 'eventlist.html.twig', array(
+                "events" => $events,
+                "user" => $_SESSION['user']
             ));
 
         }else{
 
-            $this->view["view"]->render($response, 'event.html.twig', array(
-                "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
-                "dateEvent" => Event::where("idEvent", "like", $_GET["idEvent"])->first()->dates
+            $this->view["view"]->render($response, 'eventlist.html.twig', array(
+                "events" => $events
             ));
 
         }
