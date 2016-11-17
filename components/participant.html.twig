@@ -19,26 +19,26 @@
         {% endif %}
 
         <div class="aligncentre">
-        <form action="submitparticipant" method="post" enctype="multipart/form-data">
+        <form action="submitparticipant?idTrial={{ idTrial }}" method="post" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="lastNameParticipant">Last name</label>
-                <input class="form-control" name="nom" type="text" autocomplete="off" placeholder="Last Name" required/>
+                <input class="form-control" name="lastNameParticipant" type="text" autocomplete="off" placeholder="Last Name" required/>
             </div><br/>
 
             <div class="form-group">
                 <label for="firstNameParticipant">First name</label>
-                <input class="form-control" name="prenom" type="text" autocomplete="off" placeholder="First Name" required/>
+                <input class="form-control" name="firstNameParticipant" type="text" autocomplete="off" placeholder="First Name" required/>
             </div><br/>
 
             <div class="form-group">
                 <label for="emailParticipant">Email address</label>
-                <input class="form-control" name="email" type="email" autocomplete="off" placeholder="Email Address" required/>
+                <input class="form-control" name="emailParticipant" type="email" autocomplete="off" placeholder="Email Address" required/>
             </div><br/>
 
             <div class="form-group">
                 <label for="ageParticipant">Age</label>
-                <input class="form-control" name="age" type="date" autocomplete="off" placeholder="Birthday" required/>
+                <input class="form-control" name="ageParticipant" type="text" autocomplete="off" placeholder="Age" required/>
             </div>
 
             <button class="btn btn-primary" type="submit">Register</button>
