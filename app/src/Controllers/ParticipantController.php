@@ -35,8 +35,17 @@ class ParticipantController extends AbstractController{
         $p->firstname = filter_var($_POST['firstNameParticipant'], FILTER_SANITIZE_STRING);
         $p->mail = filter_var($_POST['emailParticipant'], FILTER_SANITIZE_EMAIL);
         $p->birthdate = filter_var($_POST['birthdayParticipant'], FILTER_SANITIZE_STRING);
+        $dossardcount = Inscription::where('idTrial', 'like', $_GET['idTrial'])->count();
+        $p->bib = $dossardcount+1;
 
         $p->save();
+
+        $i = new Inscription();
+        $i->idParticipant = $p->idParticipant;
+        $i->idTrial = $_GET['idTrial'];
+        $i->save();
+
+        $_SESSION['id'] = $p->idParticipant;
         return 4;
 
       } else {
@@ -51,7 +60,9 @@ class ParticipantController extends AbstractController{
 
   public function dispatchSubmit(Request $request, Response $response, $args){
 
-    $res=$this->register();
+    $res=$this->registerParticipant();
+
+    $p=Participant::where('idParticipant', 'like', $_SESSION['id']);
 
     switch($res) {
         case 2:
@@ -66,7 +77,9 @@ class ParticipantController extends AbstractController{
             break;
         case 4:
             $this->view['view']->render($response, 'login.html.twig', array(
-                'success' => "You have been successfully registered."
+                'success' => 'You have been successfully registered.',
+                'dossard' => $p->bib,
+                'numP' => $p->idParticipant
             ));
             break;
         default:
