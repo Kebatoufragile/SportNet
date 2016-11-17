@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 15 Novembre 2016 à 10:35
+-- Généré le :  Jeu 17 Novembre 2016 à 15:56
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  7.0.9
 
@@ -87,8 +87,8 @@ CREATE TABLE `participant` (
   `idParticipant` int(11) NOT NULL,
   `lastname` varchar(40) NOT NULL,
   `firstname` varchar(40) NOT NULL,
-  `mail` date NOT NULL,
-  `birthdate` date NOT NULL,
+  `mail` varchar(50) NOT NULL,
+  `age` varchar(10) NOT NULL,
   `bib` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -249,6 +249,13 @@ ALTER TABLE `event`
   ADD PRIMARY KEY (`idEvent`);
 
 --
+-- Index pour la table `participant`
+--
+ALTER TABLE `participant`
+  ADD PRIMARY KEY (`idParticipant`),
+  ADD KEY `index_participant` (`idParticipant`);
+
+--
 -- Index pour la table `persistences`
 --
 ALTER TABLE `persistences`
@@ -308,7 +315,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `activations`
 --
 ALTER TABLE `activations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `comment`
 --
@@ -318,12 +325,17 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT pour la table `event`
 --
 ALTER TABLE `event`
-  MODIFY `idEvent` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEvent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT pour la table `participant`
+--
+ALTER TABLE `participant`
+  MODIFY `idParticipant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT pour la table `persistences`
 --
 ALTER TABLE `persistences`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT pour la table `picture`
 --
@@ -348,12 +360,12 @@ ALTER TABLE `throttle`
 -- AUTO_INCREMENT pour la table `trial`
 --
 ALTER TABLE `trial`
-  MODIFY `idTrial` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTrial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
