@@ -111,7 +111,7 @@ final class RegisterController extends AbstractController
                 ));
                 break;
             case 3:
-                $this->view['view']->render($response, 'login.html.twig', array(
+                $this->view['view']->render($response, 'homepage.html.twig', array(
                     'success' => "You have been successfully registered. You can now try log in."
                 ));
                 break;
