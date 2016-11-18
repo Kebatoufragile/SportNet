@@ -67,3 +67,5 @@ $app->get('/generateURL', 'App\Controllers\HomeController:dispatch')->setName('h
 $app->get('/seeResults', 'App\Controllers\ParticipantController:findResults')->setName('seeResults');
 
 $app->get('/results', 'App\Controllers\EventController:displayResults')->setName('results');
+
+$app->get('/payment', 'App\Controllers\ParticipantController:dispatchPayment')->setName('payment');

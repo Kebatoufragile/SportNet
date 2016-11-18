@@ -13,10 +13,9 @@
         {% endif %}
 
         <div class="aligncentre">
-            <h2>Participant number : {{ numP }}</h2>
-            <h2>BIB number : {{ dossard }}</h2>
+            <h2>If you want to participate to the trial, you have to pay before</h2>
 
-            <form action="event">
+            <form action="payment">
               <input type="number" value="{{ event }}" name="idEvent" style="display:none">
               <button class="btn btn-primary" type="submit">Pay for registration</button>
             </form>
