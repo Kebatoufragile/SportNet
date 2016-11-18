@@ -94,7 +94,8 @@ class EventController extends AbstractController{
                 $this->view["view"]->render($response, 'event.html.twig', array(
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
                     "user" => $_SESSION['user'],
-                    'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get()
+                    'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
+                    'path' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']
                 ));
             }else{
                 $this->view["view"]->render($response, 'event.html.twig', array(
@@ -213,7 +214,7 @@ class EventController extends AbstractController{
         } else {
 
             $trials = Trial::where('idEvent', 'like', filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT))->get();
-            
+
             $this->view["view"]->render($response, "homepage.html.twig", array(
                 "error" => "Event doesn't exist.",
                 'event' => $e,
@@ -225,7 +226,8 @@ class EventController extends AbstractController{
     }
 
 
-    public function simplifyURL($path){
+    public function simplifyURL(Request $request, Response $response, $args){
+      $path = $_POST['path'];
         $r = array();
         foreach(explode('/', $path) as $p){
             if($p == '..'){
@@ -238,7 +240,10 @@ class EventController extends AbstractController{
         if($path[0] == '/'){
             $r = '/$r';
         }
-        return $r;
+        $this->view["view"]->render($response, 'url.html.twig', array(
+          'url' => $r,
+          'user' => $_SESSION['user']
+        ));
     }
 
     /*
