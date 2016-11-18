@@ -69,3 +69,5 @@ $app->get('/seeResults', 'App\Controllers\ParticipantController:findResults')->s
 $app->get('/results', 'App\Controllers\EventController:displayResults')->setName('results');
 
 $app->get('/payment', 'App\Controllers\ParticipantController:dispatchPayment')->setName('payment');
+
+$app->get('/42', 'App\Controllers\EasterController:dispatch')->setName('42');
