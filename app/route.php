@@ -57,3 +57,5 @@ $app->get('/upload', 'App\Controllers\CsvController:uploadResults')->setName('ho
 $app->post('/generateURL', 'App\Controllers\EventController:simplifyURL')->setName('generateURL');
 
 $app->get('/seeResults', 'App\Controllers\ParticipantController:findResults')->setName('seeResults');
+
+$app->get('/results', 'App\Controllers\EventController:displayResults')->setName('results');

@@ -64,7 +64,6 @@
 
     <div class="aligncentre">
         <h3>Trials list</h3> <br/>
-        {% if event.state != "closed"}
         <table>
             <tr>
                 <th class="cell entete">Name</th>
@@ -104,23 +103,21 @@
                                 <button class="btn" type="submit">Sign up</button>
                             </form>
                         </td>
+                      {% else %}
+                        {% if event.state == "closed" %}
+                          <td class="cell">
+                            <form action="results" method="get">
+                              <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
+                              <button class="btn" type "submit">See results</button>
+                            </form>
+                          </td>
+                        {% endif %}
                       {% endif %}
                     {% endif %}
                 </tr>
             {% endfor %}
 
         </table>
-      {% else %}
-        <table>
-          <tr>
-              <th class="cell entete">Name Trial</th>
-              <th class="cell entete">Date Trial</th>
-              <th class="cell entete">Frist Name participant</th>
-              <th class="cell entete">Last Name participant</th>
-              <th class="cell entete">Frist Name participant</th>
-          </tr>
-        </table>
-      {% endif %}
 
     </div>
 
