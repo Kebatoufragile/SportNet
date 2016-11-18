@@ -20,6 +20,10 @@
 
         <div class="aligncentre">
             <h3>{{ event.name }}</h3> <br/>
+            <form action="generateURL" method="post">
+              <input style='display:none' name="path" type='radio' value={{ path }} checked />
+              <button type="submit" class="btn">Generate share URL </button>
+            </form>
             <h4>Change event state</h4> <br/>
             <form action="updateEventState" method="post">
                 <input style="display:none" name="idEvent" type="radio" value={{ event.idEvent }} checked />
