@@ -85,6 +85,7 @@
 
                         <td class="cell">
                             <form action="upload" method="post" enctype="multipart/form-data">
+                                <input type="number" value="{{ event.idEvent }}" name="idEvent" style="display:none">
                                 <input type="number" value="{{ trial.idTrial }}" name="idTrial" style="display:none">
                                 <input type="file" name="results" required><br>
                                 <button class="btn" type="submit">UploadResults</button>
@@ -94,6 +95,7 @@
                     {% else %}
                         <td class="cell">
                             <form action="participant?idTrial={{ trial.idTrial }}" method="get">
+                                <input value="{{ event.idEvent }}" name="idEvent" style="display:none">
                                 <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
                                 <button class="btn" type="submit">Sign up</button>
                             </form>

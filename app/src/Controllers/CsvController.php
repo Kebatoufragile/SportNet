@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Event;
 use App\Models\Inscription;
 use App\Models\Participant;
+use App\Models\Result;
 use App\Models\Trial;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -75,21 +76,81 @@ class CsvController extends AbstractController{
 
     public function uploadResults(Request $request, Response $response, $args){
 
-        if(isset($_FILES['uploadResults']['tmp_name'])){
+        $e = Event::where('idEvent', 'like', $_POST['idEvent'])->first();
+        $idTrial = $_POST['idTrial'];
+        $trials = Trial::where('idEvent', 'like', $e->idEvent)->get();
 
-            $file = file_get_contents($_FILES['uploadResults']['tmp_name']);
+        // if the user is logged
+        if(isset($_SESSION['user'])){
 
-            echo '<script>alert('.$file.')</script>';
+            // if the user is the organizer
+            if($_SESSION['user']->id == $e->idOrg) {
 
+                // if a file is uploaded
+                if (isset($_FILES['results']['tmp_name'])) {
+
+                    $file = explode("\n", file_get_contents($_FILES['results']['tmp_name']));
+
+                    // if file not empty
+                    if (count($file) > 1) {
+
+                        array_shift($file);
+
+                        foreach ($file as $line) {
+
+                            $line = explode(";", $line);
+
+                            $r = new Result();
+                            $r->rank = $line[1];
+                            $r->idTrial = $idTrial;
+                            $r->idParticipant = $line[0];
+
+                            $r->save();
+
+                            $this->view['view']->render($response, 'event.html.twig', array(
+                                'event' => $e,
+                                'success' => 'Results have been upload.',
+                                'user' => $_SESSION['user'],
+                                'trials' =>$trials
+                            ));
+                        }
+
+                    } else {
+                        $this->view['view']->render($response, 'event.html.twig', array(
+                            'event' => $e,
+                            'error' => 'File is empty',
+                            'user' => $_SESSION['user'],
+                            'trials' =>$trials
+                        ));
+                    }
+
+                } else {
+
+                    $this->view['view']->render($response, 'event.html.twig', array(
+                        'event' => Event::where('idEvent'),
+                        'user' => $_SESSION['user'],
+                        'error' => 'You must choose a file.',
+                        'trials' =>$trials
+                    ));
+                }
+
+            }else{
+
+                $this->view['view']->render($response, 'event.html.twig', array(
+                    'event' => Event::where('idEvent'),
+                    'user' => $_SESSION['user'],
+                    'error' => 'You do not own the event.',
+                    'trials' =>$trials
+                ));
+            }
 
         }else{
-            if (isset($_SESSION['user'])) {
-                $this->view['view']->render($response, 'homepage.html.twig', array(
-                    'user' => $_SESSION['user']
-                ));
-            } else {
-                $this->view['view']->render($response, 'homepage.html.twig');
-            }
+            $this->view['view']->render($response, 'event.html.twig', array(
+                'event' => Event::where('idEvent'),
+                'error' => 'You must be logged to perform this action.',
+                'trials' =>$trials
+            ));
         }
+
     }
 }
