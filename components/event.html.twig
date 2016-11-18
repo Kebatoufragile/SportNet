@@ -19,6 +19,10 @@
     {% if user != false and user.id == event.idOrg %}
 
         <div class="aligncentre">
+            <h2>{{ idparticipant }}</h2>
+            {% if idparticipant != false and dossard != false %}
+              <h2>Successfully registered !<br/>Num Participant: {{ idparticipant }}<br/>Bib: {{ dossard }}</h3>
+            {% endif %}
             <h3>{{ event.name }}</h3> <br/>
             <form action="generateURL" method="post">
               <input style='display:none' name='path' type='radio' value={{ path }} checked />
@@ -47,8 +51,11 @@
 
     {% else %}
 
-
         <div class="aligncentre">
+          {% if idparticipant != false and dossard != false %}
+            <h2>Successfully registered !<br/>Num Participant: {{ idparticipant }}<br/>Bib: {{ dossard }}</h3>
+          {% endif %}
+
             <h3>{{ event.name }}</h3> <br/>
 
             <p> Le <strong>{{ dateEvent }}</strong> à <strong>{{ event.location }}</strong></p>

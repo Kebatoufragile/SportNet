@@ -20,7 +20,7 @@ class ParticipantController extends AbstractController{
     }
 
     public function dispatch(Request $request, Response $response, $args){
-      if ($_SESSION['user']){
+      if (isset($_SESSION['user'])){
         $this->view['view']->render($response, 'participant.html.twig', array(
             'idTrial' => $_GET['idTrial'],
             'user' => $_SESSION['user']
@@ -47,12 +47,13 @@ class ParticipantController extends AbstractController{
             $dossardcount = Inscription::where('idTrial', '=', $_GET['idTrial'])->count();
             $p->bib = $dossardcount+1;
 
-            $p->save();
+            $_SESSION['participant']=$p;
+            //$p->save();
 
             $i = new Inscription();
-            $i->idParticipant = $p->idParticipant;
             $i->idTrial = $_GET['idTrial'];
-            $i->save();
+            $_SESSION['inscription']=$i;
+            //$i->save();
 
             $_SESSION['id'] = $p->idParticipant;
             return 4;
@@ -66,9 +67,8 @@ class ParticipantController extends AbstractController{
     public function dispatchSubmit(Request $request, Response $response, $args){
 
         $res=$this->registerParticipant();
+        $e=Trial::where('idTrial', '=', $_SESSION['inscription']->idTrial)->first();
 
-        $p=Participant::where('idParticipant', '=', $_SESSION['id'])->first();
-        $t=Trial::where('idTrial', '=', $_GET['idTrial'])->first();
         if(isset($_SESSION['user'])){
           switch($res) {
               case 2:
@@ -80,9 +80,9 @@ class ParticipantController extends AbstractController{
               case 4:
                   $this->view['view']->render($response, 'submit.html.twig', array(
                       'success' => 'You have been successfully registered.',
-                      'dossard' => $p->bib,
-                      'numP' => $p->idParticipant,
-                      'event' => $t->idEvent,
+                      'dossard' => $_SESSION['participant']->bib,
+                      'numP' => $_SESSION['participant']->idParticipant,
+                      'event' => $e->idEvent,
                       'user' => $_SESSION['user']
                   ));
                   break;
@@ -103,9 +103,9 @@ class ParticipantController extends AbstractController{
               case 4:
                   $this->view['view']->render($response, 'submit.html.twig', array(
                       'success' => 'You have been successfully registered.',
-                      'dossard' => $p->bib,
-                      'numP' => $p->idParticipant,
-                      'event' => $t->idEvent
+                      'dossard' => $_SESSION['participant']->bib,
+                      'numP' => $_SESSION['participant']->idParticipant,
+                      'event' => $e->idEvent
                   ));
                   break;
               default:
@@ -116,6 +116,51 @@ class ParticipantController extends AbstractController{
           }
         }
         return $response;
+    }
+
+    public function dispatchPayment(Request $request, Response $response, $args){
+
+      if (isset($_SESSION['participant']) && isset($_SESSION['inscription'])){
+        $_SESSION['participant']->save();
+        $_SESSION['inscription']->idParticipant = $_SESSION['participant']->idParticipant;
+        $_SESSION['inscription']->save();
+        $p=$_SESSION['participant'];
+      }
+
+      if(isset($_GET["idEvent"])){
+          if(isset($_SESSION['user'])){
+              $this->view["view"]->render($response, 'event.html.twig', array(
+                  "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+                  "user" => $_SESSION['user'],
+                  'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
+                  'path' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
+                  'idparticipant' => $p->idParticipant,
+                  'dossard' => $p->bib,
+                  'dateEvent' => Event::where("idEvent", "like", $_GET['idEvent'])->first()->dates
+              ));
+          }else{
+              $this->view["view"]->render($response, 'event.html.twig', array(
+                  "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
+                  'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
+                  'idparticipant' => $p->idParticipant,
+                  'dossard' => $p->bib,
+                  'dateEvent' => Event::where("idEvent", "like", $_GET['idEvent'])->first()->dates
+              ));
+          }
+
+      }else{
+          if(isset($_SESSION['user'])){
+              $this->view["view"]->render($response, 'homepage.html.twig', array(
+                  "error" => "Event doesn't exist.",
+                  "user" => $_SESSION['user']
+              ));
+          }else{
+              $this->view["view"]->render($response, 'homepage.html.twig', array(
+                  "error" => "Event doesn't exist."
+              ));
+          }
+      }
+      return $response;
     }
 
 
