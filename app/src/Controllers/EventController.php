@@ -111,7 +111,7 @@ class EventController extends AbstractController{
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
                     "user" => $_SESSION['user'],
                     'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
-                    'path' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
+                    'path' => $Sname.'/'.$path1.'/'.$path2.'/'.$path3.'/event?idEvent='.$e->idEvent,
                     'dateEvent' => Event::where("idEvent", "like", $_GET['idEvent'])->first()->dates
                 ));
             }else{
@@ -137,6 +137,13 @@ class EventController extends AbstractController{
     }
 
     public function changeEventState(Request $request, Response $response, $args){
+
+      $Sname = $_SERVER['SERVER_NAME'];
+      $Surl = $_SERVER['REDIRECT_URL'];
+      $url = explode('/', $Surl);
+      $path1 = $url[0];
+      $path2 = $url[1];
+      $path3 = $url[2];
 
         $e = Event::where("idEvent", "like", $_POST["idEvent"])->first();
 
@@ -170,7 +177,8 @@ class EventController extends AbstractController{
                         "success" => "Your event has been updated.",
                         'event' => $e,
                         'user' => $_SESSION['user'],
-                        'trials' => Trial::where("idEvent", "like", $_POST['idEvent'])->get()
+                        'trials' => Trial::where("idEvent", "like", $_POST['idEvent'])->get(),
+                        'path' => $Sname.'/'.$path1.'/'.$path2.'/'.$path3.'/event?idEvent='.$e->idEvent
                     ));
                 }else{
                     $this->view['view']->render($response, 'homepage.html.twig', array(
