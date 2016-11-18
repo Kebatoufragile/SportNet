@@ -94,6 +94,15 @@
                             </form>
                         </td>
 
+                        {% if event.state == "closed" and event.state == "finish" %}
+                          <td class="cell">
+                            <form action="results" method="get">
+                              <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
+                              <button class="btn" type "submit">See results</button>
+                            </form>
+                          </td>
+                        {% endif %}
+
                     {% else %}
                       {% if event.state == "open" %}
                         <td class="cell">
@@ -104,7 +113,7 @@
                             </form>
                         </td>
                       {% else %}
-                        {% if event.state == "closed" %}
+                        {% if event.state == "closed" or event.state == "finish" %}
                           <td class="cell">
                             <form action="results" method="get">
                               <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
