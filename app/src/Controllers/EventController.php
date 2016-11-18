@@ -119,36 +119,64 @@ class EventController extends AbstractController{
     }
 
     public function changeEventState(Request $request, Response $response, $args){
-        if(isset($_POST["state"]) && isset($_POST["idEvent"])){
-            $e = Event::where("idEvent", "like", $_POST["idEvent"])->first();
-            switch ($_POST["state"]) {
-                case 'open':
-                    $e->state = "open";
-                    $e->save();
-                    break;
-                case 'closed':
-                    $e->state = "closed";
-                    $e->save();
-                    break;
-                case 'finish':
-                    $e->state = "finish";
-                    $e->save();
-                    break;
-                default:
-                    $this->view["view"]->render($response, "event.html.twig", array(
-                        "error" => "Wrong state."
-                    ));
-                    break;
-            }
-            $this->view['view']->render($response, 'event.html.twig', array(
-                "success" => "Your event has been updated."
-            ));
-        }else{
-            $this->view["view"]->render($response, 'homepage.html.twig', array(
-                "error" => "Event doesn't exist."
 
+        $e = Event::where("idEvent", "like", $_POST["idEvent"])->first();
+
+        if(isset($_SESSION['user'])){
+
+            if($_SESSION['user']->id == $e->idOrg){
+
+                if(!is_null($e)){
+
+                    switch ($_POST["state"]) {
+                        case 'open':
+                            $e->state = "open";
+                            $e->save();
+                            break;
+                        case 'closed':
+                            $e->state = "closed";
+                            $e->save();
+                            break;
+                        case 'finish':
+                            $e->state = "finish";
+                            $e->save();
+                            break;
+                        default:
+                            $this->view["view"]->render($response, "event.html.twig", array(
+                                "error" => "Wrong state."
+                            ));
+                            break;
+                    }
+
+                    $this->view['view']->render($response, 'event.html.twig', array(
+                        "success" => "Your event has been updated.",
+                        'event' => $e,
+                        'user' => $_SESSION['user']
+                    ));
+
+                }else{
+                    $this->view['view']->render($response, 'homepage.html.twig', array(
+                        'error' => 'The event dos not exist',
+                        'user' => $_SESSION['user']
+                    ));
+                }
+
+
+            }else {
+                $this->view["view"]->render($response, 'event.html.twig', array(
+                    "error" => "You don't own the event.",
+                    'event' => $e,
+                    'user' => $_SESSION['user']
+                ));
+            }
+
+        }else{
+            $this->view['view']->render($response, 'event.html.twig', array(
+                'error' => 'You must be logged to perform this action.',
+                'event' => $e
             ));
         }
+
     }
 
 
@@ -180,19 +208,19 @@ class EventController extends AbstractController{
 
 
     public function simplifyURL($path){
-      $r = array();
-      foreach(explode('/', $path) as $p){
-        if($p == '..'){
-          array_pop($r);
-        }elseif ($p != "." && strlen($p)) {
-          $r[] = $p;
+        $r = array();
+        foreach(explode('/', $path) as $p){
+            if($p == '..'){
+                array_pop($r);
+            }elseif ($p != "." && strlen($p)) {
+                $r[] = $p;
+            }
         }
-      }
-      $r = implode('/', $r);
-      if($path[0] == '/'){
-        $r = '/$r';
-      }
-      return $r;
+        $r = implode('/', $r);
+        if($path[0] == '/'){
+            $r = '/$r';
+        }
+        return $r;
     }
 
     /*
