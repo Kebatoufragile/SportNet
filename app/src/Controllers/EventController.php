@@ -45,17 +45,31 @@ class EventController extends AbstractController{
             $e->state = "created";
             $e->description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
             $e->idOrg = $_SESSION['user']->id;
+
+            /******** Test Path *****/
+              $Sname = $_SERVER['SERVER_NAME'];
+              $Surl = $_SERVER['REDIRECT_URL'];
+              $url = explode('/', $Surl);
+              $path1 = $url[0];
+              $path1 = $url[1];
+
+
+
+            /***********************/
             if ($e->save() != false) {
                 if (isset($_SESSION['user'])) {
                     $this->view['view']->render($response, 'event.html.twig', array(
                         'event' => $e,
                         'user' => $_SESSION['user'],
-                        'success' => "Event successfully created."
+                        'success' => "Event successfully created.",
+                        'path' => $Sname.'/'.$path1.'/'.$path2.'/event?idEvent='.$e->idEvent
+
                     ));
                 } else {
                     $this->view["view"]->render($response, 'event.html.twig', array(
                         'event' => $e,
-                        'success' => "Event successfully created."
+                        'success' => "Event successfully created.",
+                        'path' => $Sname.'/'.$path1.'/'.$path2.'/event?idEvent='.$e->idEvent
                     ));
                 }
             } else {
