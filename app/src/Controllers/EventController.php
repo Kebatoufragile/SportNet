@@ -154,9 +154,9 @@ class EventController extends AbstractController{
                     $this->view['view']->render($response, 'event.html.twig', array(
                         "success" => "Your event has been updated.",
                         'event' => $e,
-                        'user' => $_SESSION['user']
+                        'user' => $_SESSION['user'],
+                        'trials' => Trial::where("idEvent", "like", $_POST['idEvent'])->get()
                     ));
-
                 }else{
                     $this->view['view']->render($response, 'homepage.html.twig', array(
                         'error' => 'The event dos not exist',
@@ -191,7 +191,7 @@ class EventController extends AbstractController{
 
             $t = new Trial();
             $t->name = filter_var($_POST['trialName'], FILTER_SANITIZE_STRING);
-            $datetmp = explode('/', $_POST['trialDate']);
+            $datetmp = filter_var(explode('/', $_POST['trialDate']), FILTER_SANITIZE_STRING);
             $day = $datetmp[1];
             $month = $datetmp[0];
             $year = $datetmp[2];
@@ -229,7 +229,7 @@ class EventController extends AbstractController{
 
 
     public function simplifyURL(Request $request, Response $response, $args){
-      $path = $_POST['path'];
+        $path = $_POST['path'];
         $r = array();
         foreach(explode('/', $path) as $p){
             if($p == '..'){

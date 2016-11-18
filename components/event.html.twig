@@ -21,7 +21,7 @@
         <div class="aligncentre">
             <h3>{{ event.name }}</h3> <br/>
             <form action="generateURL" method="post">
-              <input style='display:none' name="path" type='radio' value={{ path }} checked />
+              <input style='display:none' name='path' type='radio' value={{ path }} checked />
               <button type="submit" class="btn">Generate share URL </button>
             </form>
             <h4>Change event state</h4> <br/>
@@ -76,7 +76,7 @@
                     <td class="cell">{{ trial.name }}</td>
                     <td class="cell">{{ trial.description }}</td>
                     <td class="cell">{{ trial.date }}</td>
-                    <td class="cell">{{ trial.price }}</td>
+                    <td class="cell">{{ trial.price }}€</td>
                     {% if user.id == event.idOrg %}
                         <td class="cell">
                             <form action="download" method="get">
@@ -94,11 +94,11 @@
                             </form>
                         </td>
 
-                        {% if event.state == "closed" and event.state == "finish" %}
+                        {% if event.state == "closed" or event.state == "finish" %}
                           <td class="cell">
                             <form action="results" method="get">
                               <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
-                              <button class="btn" type "submit">See results</button>
+                              <button class="btn" type="submit">See results</button>
                             </form>
                           </td>
                         {% endif %}
@@ -117,7 +117,7 @@
                           <td class="cell">
                             <form action="results" method="get">
                               <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
-                              <button class="btn" type "submit">See results</button>
+                              <button class="btn" type="submit">See results</button>
                             </form>
                           </td>
                         {% endif %}
