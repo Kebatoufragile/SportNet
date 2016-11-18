@@ -30,7 +30,11 @@ $app->get('/eventlist', 'App\Controllers\EventController:displayList')->setName(
 
 $app->post('/eventlist', 'App\Controllers\ResearchController:dispatch')->setName('search');
 
+$app->get('/updateEventState', 'App\Controllers\HomeController:dispatch')->setName('homepage');
+
 $app->post('/updateEventState', 'App\Controllers\EventController:changeEventState')->setName('updateEventState');
+
+$app->get('/addEventTrial', 'App\Controllers\HomeController:dispatch')->setName('homepage');
 
 $app->post('/addEventTrial', 'App\Controllers\EventController:addEventTrial')->setName('addEventTrial');
 
@@ -46,6 +50,8 @@ $app->post('/modifyPassword', 'App\Controllers\ProfileController:modifyPassword'
 
 $app->get('/participant', 'App\Controllers\ParticipantController:dispatch')->setName('participant');
 
+$app->get('/submitparticipant', 'App\Controllers\HomeController:dispatch')->setName('homepage');
+
 $app->post('/submitparticipant', 'App\Controllers\ParticipantController:dispatchSubmit')->setName('submitparticipant');
 
 $app->get('/download', 'App\Controllers\CsvController:downloadParticipants')->setName('download');
@@ -55,6 +61,8 @@ $app->post('/upload', 'App\Controllers\CsvController:uploadResults')->setName('u
 $app->get('/upload', 'App\Controllers\CsvController:uploadResults')->setName('homepage');
 
 $app->post('/generateURL', 'App\Controllers\EventController:simplifyURL')->setName('generateURL');
+
+$app->get('/generateURL', 'App\Controllers\HomeController:dispatch')->setName('homepage');
 
 $app->get('/seeResults', 'App\Controllers\ParticipantController:findResults')->setName('seeResults');
 
