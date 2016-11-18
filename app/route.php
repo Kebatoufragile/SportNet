@@ -55,3 +55,6 @@ $app->post('/upload', 'App\Controllers\CsvController:uploadResults')->setName('u
 $app->get('/upload', 'App\Controllers\CsvController:uploadResults')->setName('homepage');
 
 $app->post('/generateURL', 'App\Controllers\EventController:simplifyURL')->setName('generateURL');
+
+$app->get('/seeResults', 'App\Controllers\ParticipantController:findResults')->setName('seeResults');
+

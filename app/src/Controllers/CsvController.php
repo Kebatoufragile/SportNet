@@ -100,20 +100,25 @@ class CsvController extends AbstractController{
 
                             $line = explode(";", $line);
 
-                            $r = new Result();
-                            $r->rank = $line[1];
-                            $r->idTrial = $idTrial;
-                            $r->idParticipant = $line[0];
+                            if(Participant::where('idParticipant', 'like', $line[0])->get()->count() > 0){
 
-                            $r->save();
+                                $r = new Result();
+                                $r->rank = $line[1];
+                                $r->idTrial = $idTrial;
+                                $r->idParticipant = $line[0];
 
-                            $this->view['view']->render($response, 'event.html.twig', array(
-                                'event' => $e,
-                                'success' => 'Results have been upload.',
-                                'user' => $_SESSION['user'],
-                                'trials' =>$trials
-                            ));
+                                $r->save();
+                            }
+
+
                         }
+
+                        $this->view['view']->render($response, 'event.html.twig', array(
+                            'event' => $e,
+                            'success' => 'Results have been upload.',
+                            'user' => $_SESSION['user'],
+                            'trials' =>$trials
+                        ));
 
                     } else {
                         $this->view['view']->render($response, 'event.html.twig', array(
