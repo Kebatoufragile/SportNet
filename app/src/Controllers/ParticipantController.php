@@ -64,8 +64,6 @@ class ParticipantController extends AbstractController{
         $p=Participant::where('idParticipant', '=', $_SESSION['id'])->first();
         $t=Trial::where('idTrial', '=', $_GET['idTrial'])->first();
 
-        echo $t->idEvent;
-
         switch($res) {
             case 2:
                 $this->view['view']->render($response, 'participant.html.twig', array(
@@ -86,6 +84,8 @@ class ParticipantController extends AbstractController{
                 ));
                 break;
         }
+
+        return $response;
     }
 
 
@@ -156,7 +156,6 @@ class ParticipantController extends AbstractController{
             }
 
         }
-
     }
 
 }
