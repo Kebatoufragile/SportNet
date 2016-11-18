@@ -50,12 +50,14 @@ class EventController extends AbstractController{
                     $this->view['view']->render($response, 'event.html.twig', array(
                         'event' => $e,
                         'user' => $_SESSION['user'],
-                        'success' => "Event successfully created."
+                        'success' => "Event successfully created.",
+                        'path' => $_SERVER['SERVER_NAME']
                     ));
                 } else {
                     $this->view["view"]->render($response, 'event.html.twig', array(
                         'event' => $e,
-                        'success' => "Event successfully created."
+                        'success' => "Event successfully created.",
+                        'path' => $_SERVER['SERVER_NAME']
                     ));
                 }
             } else {
@@ -96,7 +98,7 @@ class EventController extends AbstractController{
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
                     "user" => $_SESSION['user'],
                     'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
-                    'path' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
+                    'pathComplete' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
                     'dateEvent' => Event::where("idEvent", "like", $_GET['idEvent'])->first()->dates
                 ));
             }else{
@@ -191,7 +193,7 @@ class EventController extends AbstractController{
 
             $t = new Trial();
             $t->name = filter_var($_POST['trialName'], FILTER_SANITIZE_STRING);
-            $datetmp = explode('/', $_POST['trialDate']);
+            $datetmp = filter_var(explode('/', $_POST['trialDate']), FILTER_SANITIZE_STRING);
             $day = $datetmp[1];
             $month = $datetmp[0];
             $year = $datetmp[2];
@@ -229,7 +231,7 @@ class EventController extends AbstractController{
 
 
     public function simplifyURL(Request $request, Response $response, $args){
-      $path = $_POST['path'];
+        $path = $_POST['path'];
         $r = array();
         foreach(explode('/', $path) as $p){
             if($p == '..'){
