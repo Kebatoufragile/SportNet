@@ -216,6 +216,13 @@ class EventController extends AbstractController{
 
     public function addEventTrial(Request $request, Response $response, $args){
 
+      $Sname = $_SERVER['SERVER_NAME'];
+      $Surl = $_SERVER['REDIRECT_URL'];
+      $url = explode('/', $Surl);
+      $path1 = $url[0];
+      $path2 = $url[1];
+      $path3 = $url[2];
+
         $e = Event::where('idEvent', 'like', filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT))->first();
 
         if (isset($_POST["trialName"]) && isset($_POST['trialDate']) && isset($_POST['trialPrice']) && isset($_POST['trialDescription']) && isset($_POST['idEvent'])) {
@@ -241,7 +248,8 @@ class EventController extends AbstractController{
                 "success" => "Your event has been updated.",
                 "user" => $_SESSION['user'],
                 'event' => $e,
-                'trials' => $trials
+                'trials' => $trials,
+                'path' => $Sname.'/'.$path1.'/'.$path2.'/'.$path3.'/event?idEvent='.$e->idEvent
             ));
 
         } else {
