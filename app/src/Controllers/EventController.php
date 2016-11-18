@@ -51,7 +51,8 @@ class EventController extends AbstractController{
               $Surl = $_SERVER['REDIRECT_URL'];
               $url = explode('/', $Surl);
               $path1 = $url[0];
-              $path1 = $url[1];
+              $path2 = $url[1];
+              $path3 = $url[2];
 
 
 
@@ -62,14 +63,14 @@ class EventController extends AbstractController{
                         'event' => $e,
                         'user' => $_SESSION['user'],
                         'success' => "Event successfully created.",
-                        'path' => $Sname.'/'.$path1.'/'.$path2.'/event?idEvent='.$e->idEvent
+                        'path' => $Sname.'/'.$path1.'/'.$path2.'/'.$path3.'/event?idEvent='.$e->idEvent
 
                     ));
-                } else {
+                }  else {
                     $this->view["view"]->render($response, 'event.html.twig', array(
                         'event' => $e,
                         'success' => "Event successfully created.",
-                        'path' => $Sname.'/'.$path1.'/'.$path2.'/event?idEvent='.$e->idEvent
+                        'path' => $Sname.'/'.$path1.'/'.$path2.'/'.$path3.'/event?idEvent='.$e->idEvent
                     ));
                 }
             } else {
