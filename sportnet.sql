@@ -1,30 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Client :  127.0.0.1
--- Généré le :  Ven 18 Novembre 2016 à 10:11
--- Version du serveur :  10.1.16-MariaDB
--- Version de PHP :  7.0.9
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Base de données :  `sportnet`
---
-
--- --------------------------------------------------------
-
---
--- Structure de la table `activations`
---
 
 CREATE TABLE `activations` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -36,11 +17,10 @@ CREATE TABLE `activations` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `comment`
---
+INSERT INTO `activations` (`id`, `user_id`, `code`, `completed`, `completed_at`, `created_at`, `updated_at`) VALUES
+(9, 3, 'MbSbCIGty2xfsLnOhUnZPn8P0yLVjEoO', 1, '2016-11-18 13:39:02', '2016-11-18 13:39:02', '2016-11-18 13:39:02'),
+(10, 4, 'dCBqpcgj95vBeLtcqtaop6heFpVuFXs7', 1, '2016-11-18 13:39:20', '2016-11-18 13:39:20', '2016-11-18 13:39:20'),
+(11, 5, 'yQZqKQNRjDT51GFX6FENLqRDtKrj55Vr', 1, '2016-11-18 13:40:16', '2016-11-18 13:40:16', '2016-11-18 13:40:16');
 
 CREATE TABLE `comment` (
   `idComment` int(11) NOT NULL,
@@ -48,12 +28,6 @@ CREATE TABLE `comment` (
   `idEvent` int(11) NOT NULL,
   `idParticipant` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `event`
---
 
 CREATE TABLE `event` (
   `idEvent` int(11) NOT NULL,
@@ -66,37 +40,36 @@ CREATE TABLE `event` (
   `idOrg` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `inscription`
---
+INSERT INTO `event` (`idEvent`, `name`, `description`, `location`, `discipline`, `dates`, `state`, `idOrg`) VALUES
+(4, 'Apéro chez Thibaut', 'Petit apéro chez Thibaut pour décompresser après les cours, venez nombreux !  ', 'Chez Thibaut', 'Apéro', 'Toute l&#39;année', 'open', 3),
+(5, 'Marre à Thon', 'Petit marathon à Thon mais n&#39;en ayez pas marre.', 'Thon', 'Marre', '15-12-2016', 'open', 4),
+(6, 'Tour de Corse', 'Venez voir de beaux paysages.', 'Ajaccio', 'Vélo', '15 août 2018', 'open', 5);
 
 CREATE TABLE `inscription` (
   `idParticipant` int(11) NOT NULL,
   `idTrial` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `participant`
---
+INSERT INTO `inscription` (`idParticipant`, `idTrial`) VALUES
+(8, 4),
+(9, 5),
+(10, 4),
+(11, 4);
 
 CREATE TABLE `participant` (
   `idParticipant` int(11) NOT NULL,
   `lastname` varchar(40) NOT NULL,
   `firstname` varchar(40) NOT NULL,
   `mail` varchar(50) NOT NULL,
-  `age` varchar(10) NOT NULL,
+  `age` int(3) NOT NULL,
   `bib` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `persistences`
---
+INSERT INTO `participant` (`idParticipant`, `lastname`, `firstname`, `mail`, `age`, `bib`) VALUES
+(8, 'COLLIN', 'Thibaut', 'thibaut.collin@sportnet.com', 20, 1),
+(9, 'COLLIN', 'Thibaut', 'thibaut.collin@sportnet.com', 20, 1),
+(10, 'Au revoir', 'Bonjour', 'bonjour@aurevoir.net', 15, 2),
+(11, 'GIOVANELLI', 'Alexis', 'alexis.giovanelli@sportnet.com', 12, 3);
 
 CREATE TABLE `persistences` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -106,11 +79,14 @@ CREATE TABLE `persistences` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `picture`
---
+INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`) VALUES
+(22, 3, '5jMCr4T0hKrIpmEoJVavkz2SshxzdWVh', '2016-11-18 13:40:34', '2016-11-18 13:40:34'),
+(24, 4, '8I8mJWdHznlisk9uknWt4ByWGIXtpv1w', '2016-11-18 13:45:30', '2016-11-18 13:45:30'),
+(26, 5, 'vItehuAq4nRR3eO6OFhdk2i4PihajAd0', '2016-11-18 13:52:26', '2016-11-18 13:52:26'),
+(28, 3, 'E086BrXCvQxXPDgRr56fB9HmFX393S7L', '2016-11-18 13:53:18', '2016-11-18 13:53:18'),
+(30, 4, 'zJgpCy1FTaLJAGiq8CjWINWaA72ZBx1V', '2016-11-18 13:53:34', '2016-11-18 13:53:34'),
+(32, 5, 'F6T6EXOjKbk90ANHA7HMm7r2JR8lJmLu', '2016-11-18 13:54:57', '2016-11-18 13:54:57'),
+(33, 5, 'EnYzdX101tdy1TzT66KNx51HK9O2EHNS', '2016-11-18 13:54:57', '2016-11-18 13:54:57');
 
 CREATE TABLE `picture` (
   `idPicture` int(11) NOT NULL,
@@ -119,12 +95,6 @@ CREATE TABLE `picture` (
   `idEvent` int(11) NOT NULL,
   `idParticipant` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `reminders`
---
 
 CREATE TABLE `reminders` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -136,24 +106,12 @@ CREATE TABLE `reminders` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `result`
---
-
 CREATE TABLE `result` (
   `idResult` int(11) NOT NULL,
   `rank` int(11) NOT NULL,
   `idTrial` int(11) NOT NULL,
   `idParticipant` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `roles`
---
 
 CREATE TABLE `roles` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -164,24 +122,12 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `role_users`
---
-
 CREATE TABLE `role_users` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `role_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `throttle`
---
 
 CREATE TABLE `throttle` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -192,11 +138,11 @@ CREATE TABLE `throttle` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `trial`
---
+INSERT INTO `throttle` (`id`, `user_id`, `type`, `ip`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'global', NULL, '2016-11-18 13:40:22', '2016-11-18 13:40:22'),
+(2, NULL, 'ip', '::1', '2016-11-18 13:40:23', '2016-11-18 13:40:23'),
+(3, NULL, 'global', NULL, '2016-11-18 13:54:45', '2016-11-18 13:54:45'),
+(4, NULL, 'ip', '::1', '2016-11-18 13:54:46', '2016-11-18 13:54:46');
 
 CREATE TABLE `trial` (
   `idTrial` int(11) NOT NULL,
@@ -207,11 +153,14 @@ CREATE TABLE `trial` (
   `idEvent` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `users`
---
+INSERT INTO `trial` (`idTrial`, `name`, `description`, `date`, `price`, `idEvent`) VALUES
+(4, 'Début de soirée', 'On commence doucement !', '2016-11-30', 10, 4),
+(5, 'Apéro dinatoire', 'Pour combler une petite faim !', '2016-11-30', 15, 4),
+(6, 'Fin de soirée', 'Ceux encore debout, venez !', '2016-11-30', 50, 4),
+(7, 'Collin-maillard', 'Venez comme vous êtes.', '2016-12-15', 5, 5),
+(8, 'Construction de murs', 'Featuring Alexandre Peirera', '2016-12-15', 100, 5),
+(9, 'Bastia - Ajaccio', '', '2018-08-16', 10, 6),
+(10, 'Sartène - Bastia', '', '2018-08-31', 20, 6);
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -226,157 +175,81 @@ CREATE TABLE `users` (
   `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Index pour les tables exportées
---
+INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`, `username`) VALUES
+(3, 'sebastien.dupuis@sportnet.com', '$2y$10$6R9iUZcEecBp1wbg7bJV4e1x3Uy8.tESzXMWAVkC0ZTy8MU5xo1OC', NULL, '2016-11-18 13:53:19', 'Sébastien', 'Dupuis', '2016-11-18 13:39:02', '2016-11-18 13:53:19', 'Kixot'),
+(4, 'thibaut.collin@sportnet.com', '$2y$10$VOJtDPpJpD3og5/gLv9nfOtG3dqrqsB3F.9ylj8Ba65YxbA.Hl9Nm', NULL, '2016-11-18 13:53:35', 'Thibaut', 'COLLIN', '2016-11-18 13:39:20', '2016-11-18 13:53:35', 'Grenadator'),
+(5, 'alexis.giovanelli@sportnet.com', '$2y$10$THqkv9tVa9Taf9.r13vKBOpCTaK4nEZcHwu4V1Oi4rTi/Vb.XdMxC', NULL, '2016-11-18 13:54:57', 'Alexis', 'GIOVANELLI', '2016-11-18 13:40:16', '2016-11-18 13:54:57', 'LeCorse');
 
---
--- Index pour la table `activations`
---
+
 ALTER TABLE `activations`
   ADD PRIMARY KEY (`id`);
 
---
--- Index pour la table `comment`
---
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`idComment`);
 
---
--- Index pour la table `event`
---
 ALTER TABLE `event`
   ADD PRIMARY KEY (`idEvent`);
 
---
--- Index pour la table `participant`
---
 ALTER TABLE `participant`
   ADD PRIMARY KEY (`idParticipant`),
   ADD KEY `index_participant` (`idParticipant`);
 
---
--- Index pour la table `persistences`
---
 ALTER TABLE `persistences`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `persistences_code_unique` (`code`);
 
---
--- Index pour la table `picture`
---
 ALTER TABLE `picture`
   ADD PRIMARY KEY (`idPicture`);
 
---
--- Index pour la table `reminders`
---
 ALTER TABLE `reminders`
   ADD PRIMARY KEY (`id`);
 
---
--- Index pour la table `result`
---
 ALTER TABLE `result`
   ADD PRIMARY KEY (`idResult`);
 
---
--- Index pour la table `roles`
---
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `roles_slug_unique` (`slug`);
 
---
--- Index pour la table `role_users`
---
 ALTER TABLE `role_users`
   ADD PRIMARY KEY (`user_id`,`role_id`);
 
---
--- Index pour la table `throttle`
---
 ALTER TABLE `throttle`
   ADD PRIMARY KEY (`id`),
   ADD KEY `throttle_user_id_index` (`user_id`);
 
---
--- Index pour la table `trial`
---
 ALTER TABLE `trial`
   ADD PRIMARY KEY (`idTrial`);
 
---
--- Index pour la table `users`
---
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
---
--- AUTO_INCREMENT pour les tables exportées
---
 
---
--- AUTO_INCREMENT pour la table `activations`
---
 ALTER TABLE `activations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT pour la table `comment`
---
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 ALTER TABLE `comment`
   MODIFY `idComment` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `event`
---
 ALTER TABLE `event`
-  MODIFY `idEvent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `participant`
---
+  MODIFY `idEvent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 ALTER TABLE `participant`
-  MODIFY `idParticipant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT pour la table `persistences`
---
+  MODIFY `idParticipant` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 ALTER TABLE `persistences`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
---
--- AUTO_INCREMENT pour la table `picture`
---
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 ALTER TABLE `picture`
   MODIFY `idPicture` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `reminders`
---
 ALTER TABLE `reminders`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `result`
---
 ALTER TABLE `result`
   MODIFY `idResult` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `roles`
---
 ALTER TABLE `roles`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `throttle`
---
 ALTER TABLE `throttle`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `trial`
---
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 ALTER TABLE `trial`
-  MODIFY `idTrial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `users`
---
+  MODIFY `idTrial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
