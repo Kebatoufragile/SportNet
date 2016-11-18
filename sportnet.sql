@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 17 Novembre 2016 à 15:56
+-- Généré le :  Ven 18 Novembre 2016 à 10:11
 -- Version du serveur :  10.1.16-MariaDB
 -- Version de PHP :  7.0.9
 
@@ -144,7 +144,7 @@ CREATE TABLE `reminders` (
 
 CREATE TABLE `result` (
   `idResult` int(11) NOT NULL,
-  `time` int(11) NOT NULL,
+  `rank` int(11) NOT NULL,
   `idTrial` int(11) NOT NULL,
   `idParticipant` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -275,6 +275,12 @@ ALTER TABLE `reminders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `result`
+--
+ALTER TABLE `result`
+  ADD PRIMARY KEY (`idResult`);
+
+--
 -- Index pour la table `roles`
 --
 ALTER TABLE `roles`
@@ -346,6 +352,11 @@ ALTER TABLE `picture`
 --
 ALTER TABLE `reminders`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `result`
+--
+ALTER TABLE `result`
+  MODIFY `idResult` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `roles`
 --
