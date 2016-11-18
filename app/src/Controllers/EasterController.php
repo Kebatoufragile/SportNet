@@ -23,7 +23,7 @@ class EasterController extends AbstractController{
             'user' => $_SESSION['user']
         ));
       }else{
-        $this->view['view']->render($response, 'easter.html.twig';
+        $this->view['view']->render($response, 'easter.html.twig');
       }
-
     }
+  }
