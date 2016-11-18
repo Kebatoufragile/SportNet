@@ -20,10 +20,16 @@ class ParticipantController extends AbstractController{
     }
 
     public function dispatch(Request $request, Response $response, $args){
-
+      if ($_SESSION['user']){
+        $this->view['view']->render($response, 'participant.html.twig', array(
+            'idTrial' => $_GET['idTrial'],
+            'user' => $_SESSION['user']
+        ));
+      } else {
         $this->view['view']->render($response, 'participant.html.twig', array(
             'idTrial' => $_GET['idTrial']
         ));
+      }
 
         return $response;
 
@@ -63,28 +69,52 @@ class ParticipantController extends AbstractController{
 
         $p=Participant::where('idParticipant', '=', $_SESSION['id'])->first();
         $t=Trial::where('idTrial', '=', $_GET['idTrial'])->first();
-
-        switch($res) {
-            case 2:
-                $this->view['view']->render($response, 'participant.html.twig', array(
-                    'error' => 'Unable to register you, informations are missing, please try again.'
-                ));
-                break;
-            case 4:
-                $this->view['view']->render($response, 'submit.html.twig', array(
-                    'success' => 'You have been successfully registered.',
-                    'dossard' => $p->bib,
-                    'numP' => $p->idParticipant,
-                    'event' => $t->idEvent
-                ));
-                break;
-            default:
-                $this->view['view']->render($response, 'participant.html.twig', array(
-                    'error' => 'Unable to register you, informations are wrong, please try again.'
-                ));
-                break;
+        if(isset($_SESSION['user'])){
+          switch($res) {
+              case 2:
+                  $this->view['view']->render($response, 'participant.html.twig', array(
+                      'error' => 'Unable to register you, informations are missing, please try again.',
+                      'user' => $_SESSION['user']
+                  ));
+                  break;
+              case 4:
+                  $this->view['view']->render($response, 'submit.html.twig', array(
+                      'success' => 'You have been successfully registered.',
+                      'dossard' => $p->bib,
+                      'numP' => $p->idParticipant,
+                      'event' => $t->idEvent,
+                      'user' => $_SESSION['user']
+                  ));
+                  break;
+              default:
+                  $this->view['view']->render($response, 'participant.html.twig', array(
+                      'error' => 'Unable to register you, informations are wrong, please try again.',
+                      'user' => $_SESSION['user']
+                  ));
+                  break;
+          }
+        } else {
+          switch($res) {
+              case 2:
+                  $this->view['view']->render($response, 'participant.html.twig', array(
+                      'error' => 'Unable to register you, informations are missing, please try again.'
+                  ));
+                  break;
+              case 4:
+                  $this->view['view']->render($response, 'submit.html.twig', array(
+                      'success' => 'You have been successfully registered.',
+                      'dossard' => $p->bib,
+                      'numP' => $p->idParticipant,
+                      'event' => $t->idEvent
+                  ));
+                  break;
+              default:
+                  $this->view['view']->render($response, 'participant.html.twig', array(
+                      'error' => 'Unable to register you, informations are wrong, please try again.'
+                  ));
+                  break;
+          }
         }
-
         return $response;
     }
 
