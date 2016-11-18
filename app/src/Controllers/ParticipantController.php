@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Participant;
 use App\Models\Inscription;
+use App\Models\Trial;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -59,6 +60,9 @@ class ParticipantController extends AbstractController{
     $res=$this->registerParticipant();
 
     $p=Participant::where('idParticipant', '=', $_SESSION['id'])->first();
+    $t=Trial::where('idTrial', '=', $_GET['idTrial'])->first();
+
+    echo $t->idEvent;
 
     switch($res) {
         case 2:
@@ -70,7 +74,8 @@ class ParticipantController extends AbstractController{
             $this->view['view']->render($response, 'submit.html.twig', array(
                 'success' => 'You have been successfully registered.',
                 'dossard' => $p->bib,
-                'numP' => $p->idParticipant
+                'numP' => $p->idParticipant,
+                'event' => $t->idEvent
             ));
             break;
         default:
