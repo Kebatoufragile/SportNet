@@ -59,3 +59,5 @@ $app->post('/generateURL', 'App\Controllers\EventController:simplifyURL')->setNa
 $app->get('/seeResults', 'App\Controllers\ParticipantController:findResults')->setName('seeResults');
 
 $app->get('/results', 'App\Controllers\EventController:displayResults')->setName('results');
+
+$app->get('/payment', 'App\Controllers\ParticipantController:dispatchPayment')->setName('payment');
