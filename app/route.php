@@ -53,3 +53,5 @@ $app->get('/download', 'App\Controllers\CsvController:downloadParticipants')->se
 $app->post('/upload', 'App\Controllers\CsvController:uploadResults')->setName('upload');
 
 $app->get('/upload', 'App\Controllers\CsvController:uploadResults')->setName('homepage');
+
+$app->get('/seeResults', 'App\Controllers\ParticipantController:findResults')->setName('seeResults');

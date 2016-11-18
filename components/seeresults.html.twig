@@ -1,0 +1,35 @@
+{% extends 'homepage.html.twig' %}
+
+{% block content %}
+
+    {% if error != false %}
+        <div class="alert danger">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <table>
+        <tr>
+            <th class="cell entete">Event Name</th>
+            <th class="cell entete">Trial Name</th>
+            <th class="cell entete">Rank</th>
+            <th class="cell entete">Participant Last Name</th>
+            <th class="cell entete">Participant First Name</th>
+        </tr>
+
+        {% for result in results %}
+
+            <tr class="ligne1">
+                <td class="cell">{{ result.eventname }}</td>
+                <td class="cell">{{ result.trialname }}</td>
+                <td class="cell">{{ result.rank }}</td>
+                <td class="cell">{{ result.lastname }}</td>
+                <td class="cell">{{ result.firstname }}</td>
+            </tr>
+
+        {% endfor %}
+
+
+    </table>
+
+{% endblock %}
