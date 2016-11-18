@@ -86,6 +86,7 @@ class EventController extends AbstractController{
     }
 
     public function displayList(Request $request, Response $response, $args){
+
         $events = Event::where('state', 'not like', 'created')->get()->reverse();
 
         if(isset($_SESSION['user'])){
@@ -105,13 +106,20 @@ class EventController extends AbstractController{
     }
 
     public function displayEventPage(Request $request, Response $response, $args){
+      $Sname = $_SERVER['SERVER_NAME'];
+      $Surl = $_SERVER['REDIRECT_URL'];
+      $url = explode('/', $Surl);
+      $path1 = $url[0];
+      $path2 = $url[1];
+      $path3 = $url[2];
+
         if(isset($_GET["idEvent"]) && Event::where('idEvent', "like", $_GET['idEvent'])->count() > 0){
             if(isset($_SESSION['user'])){
                 $this->view["view"]->render($response, 'event.html.twig', array(
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
                     "user" => $_SESSION['user'],
                     'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
-                    'path' => $Sname.'/'.$path1.'/'.$path2.'/'.$path3.'/event?idEvent='.$e->idEvent,
+                    'path' => $Sname.'/'.$path1.'/'.$path2.'/'.$path3.'/event?idEvent='.$_GET['idEvent'],
                     'dateEvent' => Event::where("idEvent", "like", $_GET['idEvent'])->first()->dates
                 ));
             }else{
