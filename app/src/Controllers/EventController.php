@@ -50,14 +50,12 @@ class EventController extends AbstractController{
                     $this->view['view']->render($response, 'event.html.twig', array(
                         'event' => $e,
                         'user' => $_SESSION['user'],
-                        'success' => "Event successfully created.",
-                        'path' => $_SERVER['SERVER_NAME']
+                        'success' => "Event successfully created."
                     ));
                 } else {
                     $this->view["view"]->render($response, 'event.html.twig', array(
                         'event' => $e,
-                        'success' => "Event successfully created.",
-                        'path' => $_SERVER['SERVER_NAME']
+                        'success' => "Event successfully created."
                     ));
                 }
             } else {
@@ -98,7 +96,7 @@ class EventController extends AbstractController{
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
                     "user" => $_SESSION['user'],
                     'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
-                    'pathComplete' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
+                    'path' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
                     'dateEvent' => Event::where("idEvent", "like", $_GET['idEvent'])->first()->dates
                 ));
             }else{
@@ -156,9 +154,9 @@ class EventController extends AbstractController{
                     $this->view['view']->render($response, 'event.html.twig', array(
                         "success" => "Your event has been updated.",
                         'event' => $e,
-                        'user' => $_SESSION['user']
+                        'user' => $_SESSION['user'],
+                        'trials' => Trial::where("idEvent", "like", $_POST['idEvent'])->get()
                     ));
-
                 }else{
                     $this->view['view']->render($response, 'homepage.html.twig', array(
                         'error' => 'The event dos not exist',
