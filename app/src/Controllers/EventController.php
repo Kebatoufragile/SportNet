@@ -181,7 +181,11 @@ class EventController extends AbstractController{
 
 
     public function addEventTrial(Request $request, Response $response, $args){
+
+        $e = Event::where('idEvent', 'like', filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT))->first();
+
         if (isset($_POST["trialName"]) && isset($_POST['trialDate']) && isset($_POST['trialPrice']) && isset($_POST['trialDescription']) && isset($_POST['idEvent'])) {
+
             $t = new Trial();
             $t->name = filter_var($_POST['trialName'], FILTER_SANITIZE_STRING);
             $datetmp = explode('/', $_POST['trialDate']);
@@ -189,20 +193,34 @@ class EventController extends AbstractController{
             $month = $datetmp[0];
             $year = $datetmp[2];
             $date = $year . '-' . $month . '-' . $day;
+
             $t->date = $date;
             $t->price = filter_var($_POST['trialPrice'], FILTER_SANITIZE_STRING);
             $t->description = filter_var($_POST['trialDescription'], FILTER_SANITIZE_STRING);
             $t->idEvent = filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT);
+
             $t->save();
+
+            $trials = Trial::where('idEvent', 'like', filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT))->get();
+
             $this->view["view"]->render($response, "event.html.twig", array(
                 "success" => "Your event has been updated.",
-                "user" => $_SESSION['user']
+                "user" => $_SESSION['user'],
+                'event' => $e,
+                'trials' => $trials
             ));
+
         } else {
+
+            $trials = Trial::where('idEvent', 'like', filter_var($_POST['idEvent'], FILTER_SANITIZE_NUMBER_INT))->get();
+            
             $this->view["view"]->render($response, "homepage.html.twig", array(
                 "error" => "Event doesn't exist.",
+                'event' => $e,
+                'trials' => $trials,
                 "user" => $_SESSION['user']
             ));
+
         }
     }
 
