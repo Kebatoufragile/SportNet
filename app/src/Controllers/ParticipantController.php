@@ -37,7 +37,7 @@ class ParticipantController extends AbstractController{
             $p->lastname = filter_var($_POST['lastNameParticipant'], FILTER_SANITIZE_STRING);
             $p->firstname = filter_var($_POST['firstNameParticipant'], FILTER_SANITIZE_STRING);
             $p->mail = filter_var($_POST['emailParticipant'], FILTER_SANITIZE_EMAIL);
-            $p->age = filter_var($_POST['ageParticipant'], FILTER_SANITIZE_STRING);
+            $p->age = filter_var($_POST['ageParticipant'], FILTER_SANITIZE_NUMBER_INT);
             $dossardcount = Inscription::where('idTrial', '=', $_GET['idTrial'])->count();
             $p->bib = $dossardcount+1;
 
