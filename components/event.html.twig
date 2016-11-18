@@ -91,6 +91,7 @@
                         </td>
 
                     {% else %}
+                      {% if event.state == "open" %}
                         <td class="cell">
                             <form action="participant?idTrial={{ trial.idTrial }}" method="get">
                                 <input value="{{ event.idEvent }}" name="idEvent" style="display:none">
@@ -98,6 +99,7 @@
                                 <button class="btn" type="submit">Sign up</button>
                             </form>
                         </td>
+                      {% endif %}
                     {% endif %}
                 </tr>
             {% endfor %}
