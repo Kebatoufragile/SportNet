@@ -63,7 +63,7 @@
     {% endif %}
 
     <div class="aligncentre">
-        <h3>Liste des épreuves</h3> <br/>
+        <h3>Trials list</h3> <br/>
         <table>
             <tr>
                 <th class="cell entete">Name</th>
@@ -103,6 +103,15 @@
                                 <button class="btn" type="submit">Sign up</button>
                             </form>
                         </td>
+                      {% else %}
+                        {% if event.state == "closed" %}
+                          <td class="cell">
+                            <form action="results" method="get">
+                              <input value="{{ trial.idTrial }}" name="idTrial" style="display:none">
+                              <button class="btn" type "submit">See results</button>
+                            </form>
+                          </td>
+                        {% endif %}
                       {% endif %}
                     {% endif %}
                 </tr>

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="panel panel-primary panel-register text-center">
+        <div class="panel-heading aligncentre"><h1 class="panel-title">Results for trial</h1></div><br/>
+        <div class="panel-body">
+
+        <div class="aligncentre">
+        <table>
+            <tr>
+                <th class="cell entete">Num Participant</th>
+                <th class="cell entete">Rank</th>
+            </tr>
+            {% for result in results %}
+              <tr class="ligne1">
+                <td class="cell">{{ result.idParticipant }}</td>
+                <td class="cell">{{ result.rank }}</td>
+              </tr>
+            {% endfor %}
+
+
+
+        </table>
+        <form action="event" method="get">
+          <input value="{{ event }}" name="idEvent" style="display:none">
+          <button class="btn" type "submit">See other results</button>
+        </form>
+        </div>
+
+        </div>
+    </div>
+
+{% endblock %}

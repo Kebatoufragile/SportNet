@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Event;
 use App\Models\Trial;
+use App\Models\Result;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -95,7 +96,8 @@ class EventController extends AbstractController{
                     "event" => Event::where("idEvent", "like", $_GET["idEvent"])->first(),
                     "user" => $_SESSION['user'],
                     'trials' => Trial::where("idEvent", "like", $_GET['idEvent'])->get(),
-                    'path' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']
+                    'path' => $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
+                    'dateEvent' => Event::where("idEvent", "like", $_GET['idEvent'])->first()->dates
                 ));
             }else{
                 $this->view["view"]->render($response, 'event.html.twig', array(
@@ -244,6 +246,20 @@ class EventController extends AbstractController{
           'url' => $r,
           'user' => $_SESSION['user']
         ));
+    }
+
+    public function displayResults(Request $request, Response $response, $args){
+
+        $event=Trial::where('idTrial', '=', $_GET['idTrial'])->first();
+
+        $this->view['view']->render($response, 'resultstrials.html.twig', array(
+            'results' => Result::where('idTrial', '=', $_GET['idTrial'])->get(),
+            'idTrial' => $_GET['idTrial'],
+            'event' => $event->idEvent
+        ));
+
+        return $response;
+
     }
 
     /*
