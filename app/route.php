@@ -49,3 +49,7 @@ $app->get('/participant', 'App\Controllers\ParticipantController:dispatch')->set
 $app->post('/submitparticipant', 'App\Controllers\ParticipantController:dispatchSubmit')->setName('submitparticipant');
 
 $app->get('/download', 'App\Controllers\CsvController:downloadParticipants')->setName('download');
+
+$app->post('/upload', 'App\Controllers\CsvController:uploadResults')->setName('upload');
+
+$app->get('/upload', 'App\Controllers\CsvController:uploadResults')->setName('homepage');
